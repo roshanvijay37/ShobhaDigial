@@ -1,0 +1,24 @@
+---
+// Infinite gold marquee ribbon. The list is duplicated so the CSS translateX
+// loop is seamless. Decorative — hidden from screen readers; pauses on reduced motion.
+const items = [
+  'Weddings',
+  'Pre-Weddings',
+  'Kids & Newborn',
+  'Temple Festivals',
+  'Yakshagana',
+  'Portraits',
+  'Events',
+  'Albums & Prints',
+];
+const loop = [...items, ...items];
+---
+<div class="marquee-wrap border-y border-gold/30 bg-cream-2 py-5" aria-hidden="true">
+  <div class="marquee-track">
+    {loop.map((it) => (
+      <span class="mx-7 font-serif text-2xl text-ink/70 sm:text-3xl">
+        {it}<span class="ml-7 text-gold">✦</span>
+      </span>
+    ))}
+  </div>
+</div>

@@ -176,6 +176,49 @@
   background-size: 160px 160px;
 }
 
+/* Masked word-by-word heading reveal (toggled by scrollfx.ts) */
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+.word {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.reveal-words.is-revealed .word {
+  transform: none;
+}
+
+/* Scroll progress bar */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light));
+  z-index: 60;
+  pointer-events: none;
+}
+
+/* Marquee ribbon */
+.marquee-wrap {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-track {
+  display: inline-block;
+  animation: marquee 32s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal {
@@ -207,6 +250,12 @@
   [data-parallax] {
     transform: none !important;
     transition: none !important;
+  }
+  .word {
+    transform: none !important;
+  }
+  .marquee-track {
+    animation: none !important;
   }
   .grain-overlay {
     display: none;

@@ -13,7 +13,7 @@ const alignCls = align === 'center' ? 'items-center text-center' : 'items-start 
 ---
 <div class:list={['flex flex-col gap-4', alignCls, className]}>
   {eyebrow && <span class:list={['eyebrow', eyebrowColor]}>{eyebrow}</span>}
-  <h2 class:list={['max-w-2xl text-4xl font-semibold sm:text-5xl', titleColor]}>{title}</h2>
+  <h2 class:list={['reveal-words max-w-2xl text-4xl font-semibold sm:text-5xl', titleColor]}>{title}</h2>
   {align === 'center' ? (
     <div class="divider w-full max-w-[16rem] text-gold" aria-hidden="true">◆</div>
   ) : (
