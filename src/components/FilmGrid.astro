@@ -18,7 +18,7 @@ const prepared = films.map((f) => ({
     const live = Boolean(film.youtubeId);
     const Tag = live ? 'button' : 'div';
     return (
-      <article data-tilt="4" class="group overflow-hidden rounded-xl border border-cream/10 bg-maroon-dark/40">
+      <article data-tilt="4" class="group overflow-hidden rounded-xl border border-maroon/10 bg-white/60 shadow-sm shadow-maroon/5">
         <Tag
           class:list={['film-open relative block aspect-video w-full overflow-hidden', live && 'cursor-pointer']}
           type={live ? 'button' : undefined}
@@ -27,7 +27,14 @@ const prepared = films.map((f) => ({
           aria-label={live ? `Play film: ${film.title}` : undefined}
           aria-disabled={!live ? 'true' : undefined}
         >
-          {film.poster ? (
+          {film.posterUrl ? (
+            <img
+              src={film.posterUrl}
+              alt=""
+              loading="lazy"
+              class="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+            />
+          ) : film.poster ? (
             <Image
               src={film.poster}
               widths={[400, 800]}
@@ -53,9 +60,9 @@ const prepared = films.map((f) => ({
           </span>
         </Tag>
         <div class="p-5">
-          <span class="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-gold-light">{film.category}</span>
-          <h3 class="mt-1 font-serif text-xl text-cream">{film.title}</h3>
-          <p class="mt-1.5 text-sm leading-relaxed text-cream/65">{film.description}</p>
+          <span class="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-maroon">{film.category}</span>
+          <h3 class="mt-1 font-serif text-xl text-ink">{film.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted">{film.description}</p>
         </div>
       </article>
     );

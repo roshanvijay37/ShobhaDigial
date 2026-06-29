@@ -82,28 +82,55 @@ export interface Film {
   category: string;
   youtubeId: string;
   posterFile?: string;
+  posterUrl?: string; // remote thumbnail (e.g. a YouTube still)
   description: string;
 }
 
+// Curated from the studio's YouTube channel for variety + reach. Thumbnails are
+// pulled live from YouTube. Add/swap any by editing this list.
+const yt = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+
 export const films: Film[] = [
   {
-    title: 'Yaksha Sambhrama — Live',
+    title: 'Yaksha Sambhrama · Live',
     category: 'Yakshagana Film',
     youtubeId: 'kQen6hNw0oQ',
-    posterFile: 'temple-festival-deity-crown.jpeg',
+    posterUrl: yt('kQen6hNw0oQ'),
     description: 'A live Yakshagana evening by Shri Yakshadeva Mitra Kala Mandali, Belvai.',
   },
   {
-    // TODO: a named couple's film can use their names once they consent.
-    title: 'A Coastal Wedding',
+    title: 'Shashank & Ananya · Wedding',
     category: 'Wedding Film',
-    youtubeId: '', // TODO: paste YouTube id after upload
-    description: 'A coastal Karnataka wedding, told as a cinematic short.',
+    youtubeId: 'DB77wlWYcxU',
+    posterUrl: yt('DB77wlWYcxU'),
+    description: 'A coastal Karnataka wedding, filmed as a cinematic celebration.',
   },
   {
-    title: 'A Pre-Wedding Story',
-    category: 'Pre-Wedding Film',
-    youtubeId: '', // TODO: paste YouTube id after upload
-    description: 'Two people, one beginning — filmed across the places they love.',
+    title: 'Sthanika Brahmana Samavesha 2026',
+    category: 'Cultural Event',
+    youtubeId: 'BRRCEUF6IS0',
+    posterUrl: yt('BRRCEUF6IS0'),
+    description: 'Multi-camera coverage of a grand community convention in Mangalore.',
+  },
+  {
+    title: 'Navarasa Ramayana 2024',
+    category: 'Yakshagana Film',
+    youtubeId: '6WjkJwmIMxA',
+    posterUrl: yt('6WjkJwmIMxA'),
+    description: 'Yakshagana — the nine rasas of the Ramayana, live on stage.',
+  },
+  {
+    title: 'Classical Concert · Dr. Vidyabhushan',
+    category: 'Concert Film',
+    youtubeId: '2QjQI-fYWcA',
+    posterUrl: yt('2QjQI-fYWcA'),
+    description: 'An evening of classical music with Dr. Vidyabhushan and ensemble.',
+  },
+  {
+    title: 'Adishankara Parishat · Moodbidri',
+    category: 'Community Event',
+    youtubeId: 'mqnWpJte-FY',
+    posterUrl: yt('mqnWpJte-FY'),
+    description: 'The 33rd annual gathering of the Adishankara Parishat, Moodbidri.',
   },
 ];
