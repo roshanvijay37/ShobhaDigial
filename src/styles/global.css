@@ -36,6 +36,10 @@
     font-weight: 600;
     line-height: 1.08;
     letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
   }
   ::selection {
     background: var(--color-gold);
@@ -235,6 +239,112 @@
 .reel-wrap::-webkit-scrollbar-track { background: transparent; }
 .reel-wrap::-webkit-scrollbar-thumb { background: var(--color-gold); border-radius: 999px; }
 .reel-item img { pointer-events: none; }
+
+/* Custom cursor */
+#cursor-dot,
+#cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  will-change: transform;
+}
+#cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--color-gold);
+}
+#cursor-ring {
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--color-gold) 65%, transparent);
+  display: grid;
+  place-items: center;
+  transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease,
+    background-color 0.25s ease, border-color 0.25s ease;
+}
+#cursor-ring.is-active {
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0 -29px;
+  background: color-mix(in srgb, var(--color-gold) 12%, transparent);
+  border-color: var(--color-gold);
+}
+#cursor-ring.has-label {
+  width: 76px;
+  height: 76px;
+  margin: -38px 0 0 -38px;
+  background: var(--color-maroon);
+  border-color: var(--color-maroon);
+}
+#cursor-ring.is-down {
+  background: color-mix(in srgb, var(--color-gold) 22%, transparent);
+}
+.cursor-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-cream);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+#cursor-ring.has-label .cursor-label {
+  opacity: 1;
+}
+html.has-custom-cursor,
+html.has-custom-cursor a,
+html.has-custom-cursor button,
+html.has-custom-cursor [role="button"],
+html.has-custom-cursor .reel-item,
+html.has-custom-cursor .gallery-open,
+html.has-custom-cursor .film-open {
+  cursor: none;
+}
+html.has-custom-cursor input,
+html.has-custom-cursor textarea,
+html.has-custom-cursor select {
+  cursor: auto;
+}
+@media (hover: none), (pointer: coarse) {
+  #cursor-dot,
+  #cursor-ring {
+    display: none;
+  }
+}
+
+/* One-time intro reveal */
+html.intro-active {
+  overflow: hidden;
+}
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: var(--color-cream);
+  color: var(--color-gold);
+  transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1);
+}
+#intro.intro-lift {
+  transform: translateY(-100%);
+}
+.intro-mark {
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+#intro.intro-show .intro-mark {
+  opacity: 1;
+  transform: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

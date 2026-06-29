@@ -13,6 +13,10 @@ import { initTilt } from './motion/tilt';
 import { initParallax } from './motion/parallax';
 import { initMagnetic } from './motion/magnetic';
 import { initTextReveal, initProgress, initSkew, initPinned, initReel } from './motion/scrollfx';
+import { initCursor } from './motion/cursor';
+import { initIntro } from './motion/intro';
+
+let firstRun = true;
 import { canUseWebGL, hasFinePointer, isLowPower, prefersReducedMotion } from '../lib/capabilities';
 
 // Lazy, capability-gated WebGL signature effect. The OGL chunk is only fetched
@@ -51,7 +55,13 @@ function initPage() {
   initSkew(signal);
   initPinned(signal);
   initReel(signal);
+  initCursor(signal);
   void initWebGL(signal);
+
+  if (firstRun) {
+    firstRun = false;
+    initIntro(); // one-time, first full load only
+  }
 }
 
 // Tear down the previous page's listeners just before the DOM is swapped.
