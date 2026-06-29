@@ -2,6 +2,16 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import { readFileSync } from 'node:fs';
+
+// If a custom domain is set (public/CNAME present), always serve from the root
+// of that domain — this overrides the GitHub project sub-path automatically.
+let cname = '';
+try {
+  cname = readFileSync(new URL('./public/CNAME', import.meta.url), 'utf-8').trim();
+} catch {
+  /* no custom domain yet — fall back to env / sub-path */
+}
 
 // ── Deployment configuration ─────────────────────────────────────────────
 // SITE_URL : the public URL of the site. Set this to your custom domain once
@@ -13,11 +23,10 @@ import tailwindcss from '@tailwindcss/vite';
 // The GitHub Actions workflow injects BASE_PATH so the test deploy works at
 // https://<user>.github.io/<repo>/ . When you attach the custom domain, drop
 // BASE_PATH (serve from root) and update SITE_URL + public/CNAME.
-const SITE_URL = process.env.SITE_URL || 'https://shobhadigitalstudio.in';
-// Normalize to a leading-slash, no-trailing-slash path (or '/'), so a
-// hand-set repo variable like "ShobhaDigial" can't diverge from Astro's
-// asset prefixing.
-const rawBase = process.env.BASE_PATH || '/';
+const SITE_URL = cname ? `https://${cname}` : process.env.SITE_URL || 'https://shobhadigitalstudio.in';
+// On the custom domain the base is always '/'. Otherwise normalize the env
+// value to a leading-slash, no-trailing-slash path (or '/').
+const rawBase = cname ? '/' : process.env.BASE_PATH || '/';
 const BASE_PATH = rawBase === '/' ? '/' : '/' + rawBase.replace(/^\/+|\/+$/g, '');
 
 export default defineConfig({
