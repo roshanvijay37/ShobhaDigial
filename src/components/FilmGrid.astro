@@ -85,38 +85,3 @@ const prepared = films.map((f) => ({
     ></iframe>
   </div>
 </div>
-
-<script>
-  import { createModal } from '../lib/modal';
-
-  const lb = document.getElementById('film-lightbox');
-  const frame = document.getElementById('film-frame') as HTMLIFrameElement | null;
-  const modal = lb
-    ? createModal(lb, {
-        onClose: () => {
-          if (frame) frame.src = '';
-        },
-      })
-    : null;
-
-  const openFilm = (id: string, title: string, trigger: HTMLElement) => {
-    if (!frame || !modal) return;
-    frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
-    frame.title = title ? `Film: ${title}` : 'Film player';
-    modal.open(trigger);
-  };
-
-  document.querySelectorAll<HTMLElement>('.film-open').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.yt;
-      if (id) openFilm(id, btn.dataset.title || '', btn);
-    });
-  });
-  document.getElementById('film-close')?.addEventListener('click', () => modal?.close());
-  lb?.addEventListener('click', (e) => {
-    if (e.target === lb) modal?.close();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal?.isOpen()) modal.close();
-  });
-</script>

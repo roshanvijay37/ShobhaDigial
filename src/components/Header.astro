@@ -81,23 +81,3 @@ function isActive(path: string) {
     </nav>
   </div>
 </header>
-
-<script>
-  import { createModal } from '../lib/modal';
-
-  const openBtn = document.getElementById('menu-open');
-  const menu = document.getElementById('mobile-menu');
-  const modal = menu
-    ? createModal(menu, {
-        onOpen: () => openBtn?.setAttribute('aria-expanded', 'true'),
-        onClose: () => openBtn?.setAttribute('aria-expanded', 'false'),
-      })
-    : null;
-
-  openBtn?.addEventListener('click', () => modal?.open(openBtn));
-  document.getElementById('menu-close')?.addEventListener('click', () => modal?.close());
-  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => modal?.close()));
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal?.isOpen()) modal.close();
-  });
-</script>
