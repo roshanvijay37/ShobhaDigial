@@ -12,7 +12,7 @@ import { getLenis } from './motion/lenis';
 import { initTilt } from './motion/tilt';
 import { initParallax } from './motion/parallax';
 import { initMagnetic } from './motion/magnetic';
-import { initTextReveal, initProgress, initSkew } from './motion/scrollfx';
+import { initTextReveal, initProgress, initSkew, initPinned, initReel } from './motion/scrollfx';
 import { canUseWebGL, hasFinePointer, isLowPower, prefersReducedMotion } from '../lib/capabilities';
 
 // Lazy, capability-gated WebGL signature effect. The OGL chunk is only fetched
@@ -49,6 +49,8 @@ function initPage() {
   initTextReveal(signal);
   initProgress(signal);
   initSkew(signal);
+  initPinned(signal);
+  initReel(signal);
   void initWebGL(signal);
 }
 

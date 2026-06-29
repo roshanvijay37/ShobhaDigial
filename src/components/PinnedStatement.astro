@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import { getImage } from '../lib/images';
+import { useTranslations, asLang } from '../i18n/utils';
+
+// Cinematic pinned beat: a full-bleed photo stays fixed (CSS sticky) while it
+// slowly scales and a statement fades through, driven by scrollfx initPinned().
+// Under reduced motion it collapses to a normal section (see global.css).
+const t = useTranslations(asLang(Astro.currentLocale));
+const bg = getImage('temple-festival-deity-crown.jpeg');
+---
+<section data-pinned class="relative h-[160vh]">
+  <div class="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
+    <div data-pinned-bg class="absolute inset-0 will-change-transform">
+      <Image
+        src={bg}
+        widths={[768, 1280, 1920, 2400]}
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+        class="h-full w-full object-cover"
+      />
+    </div>
+    <div class="absolute inset-0 bg-maroon-dark/70"></div>
+    <div data-pinned-content class="relative z-10 shell text-center will-change-transform">
+      <p class="mx-auto max-w-3xl font-serif text-3xl font-medium leading-snug text-cream sm:text-5xl">
+        {t('pin.statement')}
+      </p>
+    </div>
+  </div>
+</section>

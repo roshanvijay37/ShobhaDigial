@@ -109,6 +109,7 @@ export const ui = {
     'form.orWhatsApp': 'Or message on WhatsApp',
     'form.note':
       'The online enquiry form will be enabled soon — meanwhile, please reach us on WhatsApp.',
+    'pin.statement': 'Every ritual, every glance, every joy — kept for the generations to come.',
   },
   kn: {
     'nav.home': 'ಮುಖಪುಟ',
@@ -214,5 +215,6 @@ export const ui = {
     'form.orWhatsApp': 'ಅಥವಾ ವಾಟ್ಸ್‌ಆ್ಯಪ್‌ನಲ್ಲಿ ಸಂದೇಶ ಕಳುಹಿಸಿ',
     'form.note':
       'ಆನ್‌ಲೈನ್ ವಿಚಾರಣೆ ಫಾರ್ಮ್ ಶೀಘ್ರದಲ್ಲೇ ಲಭ್ಯವಾಗಲಿದೆ — ಅಲ್ಲಿಯವರೆಗೆ, ದಯವಿಟ್ಟು ವಾಟ್ಸ್‌ಆ್ಯಪ್‌ನಲ್ಲಿ ಸಂಪರ್ಕಿಸಿ.',
+    'pin.statement': 'ಪ್ರತಿ ವಿಧಿ, ಪ್ರತಿ ನೋಟ, ಪ್ರತಿ ಸಂತೋಷ — ಮುಂದಿನ ಪೀಳಿಗೆಗಳಿಗಾಗಿ ಶಾಶ್ವತವಾಗಿ.',
   },
 } as const;

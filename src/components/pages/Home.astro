@@ -4,7 +4,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../Hero.astro';
 import SectionHeading from '../SectionHeading.astro';
 import ServiceCard from '../ServiceCard.astro';
-import Gallery from '../Gallery.astro';
+import HorizontalReel from '../HorizontalReel.astro';
+import PinnedStatement from '../PinnedStatement.astro';
 import FAQ from '../FAQ.astro';
 import FilmGrid from '../FilmGrid.astro';
 import Marquee from '../Marquee.astro';
@@ -86,18 +87,23 @@ const stats = [
     </div>
   </section>
 
-  <!-- Featured work -->
+  <!-- Featured work — cinematic horizontal reel -->
   <section class="bg-cream py-20 sm:py-28">
     <div class="shell">
       <Reveal><SectionHeading eyebrow={t('featured.eyebrow')} title={t('featured.title')} /></Reveal>
-      <Reveal class="mt-14 block">
-        <Gallery items={featured} />
-      </Reveal>
-      <div class="mt-12 text-center">
-        <a href={navHref('/portfolio', lang)} class="btn btn-primary">{t('cta.viewFull')} <Icon name="arrow-right" size={16} /></a>
+    </div>
+    <div class="mt-14">
+      <div class="shell">
+        <HorizontalReel items={portfolio} />
       </div>
     </div>
+    <div class="mt-10 text-center">
+      <a href={navHref('/portfolio', lang)} class="btn btn-primary">{t('cta.viewFull')} <Icon name="arrow-right" size={16} /></a>
+    </div>
   </section>
+
+  <!-- Pinned cinematic statement -->
+  <PinnedStatement />
 
   <!-- Marquee ribbon -->
   <Marquee />

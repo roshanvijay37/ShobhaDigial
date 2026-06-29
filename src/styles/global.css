@@ -219,6 +219,23 @@
   to   { transform: translateX(-50%); }
 }
 
+/* Horizontal photo reel */
+.reel-wrap {
+  cursor: grab;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+.reel-wrap.dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+}
+.reel-wrap::-webkit-scrollbar { height: 6px; }
+.reel-wrap::-webkit-scrollbar-track { background: transparent; }
+.reel-wrap::-webkit-scrollbar-thumb { background: var(--color-gold); border-radius: 999px; }
+.reel-item img { pointer-events: none; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal {
@@ -259,5 +276,14 @@
   }
   .grain-overlay {
     display: none;
+  }
+  /* Collapse the pinned section to a normal block (no long empty scroll). */
+  [data-pinned] {
+    height: auto !important;
+  }
+  [data-pinned] > div {
+    position: static !important;
+    height: auto !important;
+    min-height: 60vh;
   }
 }

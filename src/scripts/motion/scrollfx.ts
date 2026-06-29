@@ -71,6 +71,77 @@ export function initProgress(signal: AbortSignal) {
   update();
 }
 
+// ── 4. Pinned cinematic section (CSS sticky + JS scrub) ─────────────────────
+export function initPinned(signal: AbortSignal) {
+  if (prefersReducedMotion()) return;
+  const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-pinned]'));
+  if (!sections.length) return;
+  let raf = 0;
+  const update = () => {
+    raf = 0;
+    const vh = window.innerHeight;
+    for (const sec of sections) {
+      const total = sec.offsetHeight - vh;
+      const scrolled = Math.min(Math.max(-sec.getBoundingClientRect().top, 0), total);
+      const p = total > 0 ? scrolled / total : 0;
+      const bg = sec.querySelector<HTMLElement>('[data-pinned-bg]');
+      const content = sec.querySelector<HTMLElement>('[data-pinned-content]');
+      if (bg) bg.style.transform = `scale(${(1.05 + p * 0.22).toFixed(3)})`;
+      if (content) {
+        const o = p < 0.25 ? p / 0.25 : p > 0.85 ? Math.max(0, (1 - p) / 0.15) : 1;
+        content.style.opacity = o.toFixed(2);
+        content.style.transform = `translateY(${((0.5 - p) * 36).toFixed(1)}px)`;
+      }
+    }
+  };
+  const onScroll = () => {
+    if (!raf) raf = requestAnimationFrame(update);
+  };
+  const lenis = getLenis();
+  if (lenis) {
+    lenis.on('scroll', onScroll);
+    signal.addEventListener('abort', () => lenis.off('scroll', onScroll));
+  } else {
+    window.addEventListener('scroll', onScroll, { passive: true, signal });
+  }
+  window.addEventListener('resize', onScroll, { signal });
+  update();
+}
+
+// ── 5. Drag-to-scroll for horizontal reels ──────────────────────────────────
+export function initReel(signal: AbortSignal) {
+  document.querySelectorAll<HTMLElement>('.reel-wrap').forEach((reel) => {
+    let down = false;
+    let startX = 0;
+    let startScroll = 0;
+    reel.addEventListener(
+      'pointerdown',
+      (e) => {
+        if (e.pointerType !== 'mouse') return;
+        down = true;
+        startX = e.clientX;
+        startScroll = reel.scrollLeft;
+        reel.classList.add('dragging');
+      },
+      { signal },
+    );
+    reel.addEventListener(
+      'pointermove',
+      (e) => {
+        if (!down) return;
+        reel.scrollLeft = startScroll - (e.clientX - startX);
+      },
+      { signal },
+    );
+    const up = () => {
+      down = false;
+      reel.classList.remove('dragging');
+    };
+    reel.addEventListener('pointerup', up, { signal });
+    reel.addEventListener('pointerleave', up, { signal });
+  });
+}
+
 // ── 3. Scroll-velocity skew ────────────────────────────────────────────────
 export function initSkew(signal: AbortSignal) {
   if (prefersReducedMotion()) return;
