@@ -24,6 +24,11 @@ export default defineConfig({
   site: SITE_URL,
   base: BASE_PATH,
   trailingSlash: 'ignore',
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'kn'],
+    routing: { prefixDefaultLocale: false }, // English at /, Kannada at /kn/
+  },
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],

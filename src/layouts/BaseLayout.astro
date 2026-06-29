@@ -7,6 +7,7 @@ import GrainOverlay from '../components/GrainOverlay.astro';
 import { ClientRouter } from 'astro:transitions';
 import { site } from '../data/site';
 import { href } from '../lib/url';
+import { asLang, getHreflangs } from '../i18n/utils';
 
 interface Props {
   title?: string;
@@ -22,6 +23,8 @@ const {
   noindex = false,
 } = Astro.props;
 
+const lang = asLang(Astro.currentLocale);
+const hreflangs = getHreflangs(Astro.url.pathname, Astro.site);
 const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · Photography in Belvai`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image ?? href('/og-image.jpg'), Astro.site).href;
@@ -64,7 +67,7 @@ if (site.geoConfirmed) {
 if (site.email) jsonLd.email = site.email;
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -72,6 +75,7 @@ if (site.email) jsonLd.email = site.email;
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {hreflangs.map((h) => <link rel="alternate" hreflang={h.hreflang} href={h.href} />)}
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#232220" />
 

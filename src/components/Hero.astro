@@ -1,10 +1,12 @@
 ---
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
-import { href } from '../lib/url';
 import { site, whatsappUrl } from '../data/site';
 import { getImage } from '../lib/images';
+import { useTranslations, asLang, navHref } from '../i18n/utils';
 
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
 const hero = getImage('temple-river-procession.jpeg');
 ---
 <section class="relative isolate flex min-h-[88vh] items-center overflow-hidden">
@@ -30,21 +32,20 @@ const hero = getImage('temple-river-procession.jpeg');
     </h1>
     <div class="divider mx-auto mt-6 max-w-xs text-gold" aria-hidden="true">◆</div>
     <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-cream/85 sm:text-lg">
-      Weddings · Pre-weddings · Kids · Temple festivals and Yakshagana — photography and
-      cinematography from the heart of Belvai, for all of Dakshina Kannada.
+      {t('hero.sub')}
     </p>
     <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
-      <a href={href('/portfolio')} data-magnetic="0.4" class="btn btn-gold">
-        View Portfolio <Icon name="arrow-right" size={16} />
+      <a href={navHref('/portfolio', lang)} data-magnetic="0.4" class="btn btn-gold">
+        {t('cta.viewPortfolio')} <Icon name="arrow-right" size={16} />
       </a>
       <a href={whatsappUrl()} target="_blank" rel="noopener" data-magnetic="0.4" class="btn btn-ghost-light">
-        <Icon name="whatsapp" size={16} /> Enquire on WhatsApp
+        <Icon name="whatsapp" size={16} /> {t('cta.enquireWhatsApp')}
       </a>
     </div>
   </div>
 
   <a
-    href={href('/portfolio')}
+    href={navHref('/portfolio', lang)}
     class="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-cream/70 transition-colors hover:text-gold sm:flex"
     aria-label="Scroll to explore"
   >

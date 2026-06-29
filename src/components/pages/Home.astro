@@ -1,0 +1,142 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../Hero.astro';
+import SectionHeading from '../SectionHeading.astro';
+import ServiceCard from '../ServiceCard.astro';
+import Gallery from '../Gallery.astro';
+import FAQ from '../FAQ.astro';
+import FilmGrid from '../FilmGrid.astro';
+import Testimonial from '../Testimonial.astro';
+import Reveal from '../Reveal.astro';
+import Icon from '../Icon.astro';
+import { getImage } from '../../lib/images';
+import { site, whatsappUrl } from '../../data/site';
+import { services } from '../../data/services';
+import { portfolio, films } from '../../data/portfolio';
+import { testimonials } from '../../data/testimonials';
+import { useTranslations, asLang, navHref } from '../../i18n/utils';
+
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const featured = portfolio.filter((p) => p.featured);
+const aboutImg = getImage('temple-festival-deity-crown.jpeg');
+const stats = [
+  { value: t('stats.belvai'), label: t('stats.belvai.label') },
+  { value: t('stats.photofilm'), label: t('stats.photofilm.label') },
+  { value: t('stats.tradition'), label: t('stats.tradition.label') },
+];
+---
+<BaseLayout>
+  <Hero />
+
+  <!-- About teaser -->
+  <section class="bg-cream py-20 sm:py-28">
+    <div class="shell grid items-center gap-12 lg:grid-cols-2">
+      <Reveal class="order-2 lg:order-1">
+        <span class="eyebrow text-maroon">{t('about.eyebrow')}</span>
+        <h2 class="mt-4 font-serif text-4xl text-ink sm:text-5xl">{t('about.title')}</h2>
+        <span class="mt-5 block h-px w-16 bg-gold"></span>
+        <p class="mt-6 text-lg leading-relaxed text-ink/80">{t('about.p1')}</p>
+        <p class="mt-4 leading-relaxed text-muted">{t('about.p2')}</p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href={navHref('/about', lang)} class="btn btn-primary">{t('cta.ourStory')} <Icon name="arrow-right" size={16} /></a>
+          <a href={navHref('/services', lang)} class="btn btn-outline">{t('cta.whatWeOffer')}</a>
+        </div>
+      </Reveal>
+      <Reveal class="order-1 lg:order-2" delay={120}>
+        <div class="relative">
+          <div data-tilt="6" class="overflow-hidden rounded-2xl">
+            <Image
+              src={aboutImg}
+              widths={[480, 800, 1100]}
+              sizes="(min-width:1024px) 45vw, 100vw"
+              alt="A devotee carrying an ornate deity crown at a temple festival, photographed by Shobha Digital Studio"
+              class="h-full w-full object-cover"
+            />
+          </div>
+          <div class="pointer-events-none absolute -bottom-4 -left-4 -z-0 hidden h-24 w-24 rounded-2xl border-2 border-gold/60 sm:block"></div>
+        </div>
+      </Reveal>
+    </div>
+
+    <div class="shell mt-16">
+      <div class="grid gap-6 rounded-2xl border border-maroon/10 bg-white/50 p-8 sm:grid-cols-3">
+        {stats.map((s) => (
+          <div class="text-center">
+            <div class="font-serif text-4xl text-maroon">{s.value}</div>
+            <div class="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-muted">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="bg-cream-2 py-20 sm:py-28">
+    <div class="shell">
+      <Reveal><SectionHeading eyebrow={t('services.eyebrow')} title={t('services.title')} /></Reveal>
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {services.map((service, i) => (
+          <Reveal delay={(i % 4) * 80}><ServiceCard service={service} /></Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured work -->
+  <section class="bg-cream py-20 sm:py-28">
+    <div class="shell">
+      <Reveal><SectionHeading eyebrow={t('featured.eyebrow')} title={t('featured.title')} /></Reveal>
+      <Reveal class="mt-14 block">
+        <Gallery items={featured} />
+      </Reveal>
+      <div class="mt-12 text-center">
+        <a href={navHref('/portfolio', lang)} class="btn btn-primary">{t('cta.viewFull')} <Icon name="arrow-right" size={16} /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Films -->
+  <section class="bg-maroon-dark py-20 sm:py-28">
+    <div class="shell">
+      <Reveal><SectionHeading eyebrow={t('films.eyebrow')} title={t('films.title')} tone="light" /></Reveal>
+      <Reveal class="mt-14 block"><FilmGrid films={films} /></Reveal>
+    </div>
+  </section>
+
+  <!-- Testimonials (only renders when real, consented quotes exist) -->
+  {testimonials.length > 0 && (
+    <section class="bg-cream py-20 sm:py-28">
+      <div class="shell">
+        <Reveal><SectionHeading eyebrow="Kind words" title="What our clients say" /></Reveal>
+        <div class="mt-14 grid gap-6 md:grid-cols-3">
+          {testimonials.map((item, i) => (
+            <Reveal delay={i * 100}><Testimonial item={item} /></Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- FAQ -->
+  <FAQ />
+
+  <!-- CTA -->
+  <section class="bg-maroon py-20">
+    <div class="shell text-center">
+      <Reveal>
+        <p class="font-kannada text-lg text-gold-light">{site.taglineKannada}</p>
+        <h2 class="mx-auto mt-4 max-w-2xl font-serif text-4xl text-cream sm:text-5xl">{t('final.title')}</h2>
+        <p class="mx-auto mt-5 max-w-xl text-cream/80">{t('final.sub')}</p>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-gold">
+            <Icon name="whatsapp" size={16} /> {t('cta.enquireWhatsApp')}
+          </a>
+          <a href={navHref('/contact', lang)} class="btn btn-ghost-light">{t('cta.contactUs')}</a>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,48 +1,57 @@
 ---
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
-import { href } from '../lib/url';
 import { whatsappUrl } from '../data/site';
+import { useTranslations, asLang, navHref, localized, altLink } from '../i18n/utils';
+import { languages } from '../i18n/ui';
+
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const alt = altLink(Astro.url.pathname, lang);
 
 const nav = [
-  { label: 'Home', path: '/' },
-  { label: 'Portfolio', path: '/portfolio' },
-  { label: 'Services', path: '/services' },
-  { label: 'About', path: '/about' },
-  { label: 'Contact', path: '/contact' },
+  { key: 'nav.home' as const, path: '/' },
+  { key: 'nav.portfolio' as const, path: '/portfolio' },
+  { key: 'nav.services' as const, path: '/services' },
+  { key: 'nav.about' as const, path: '/about' },
+  { key: 'nav.contact' as const, path: '/contact' },
 ];
 
-const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
 function isActive(path: string) {
-  const target = base + (path === '/' ? '' : path) || '/';
-  if (path === '/') return current === (base || '/');
+  const target = navHref(path, lang).replace(/\/+$/, '') || '/';
+  if (path === '/') return current === target;
   return current === target || current.startsWith(target + '/');
 }
 ---
 <header class="sticky top-0 z-40 border-b border-gold/25 bg-maroon/95 shadow-lg shadow-maroon-dark/20 backdrop-blur supports-[backdrop-filter]:bg-maroon/90">
   <div class="shell flex h-16 items-center justify-between gap-4">
-    <a href={href('/')} class="shrink-0" aria-label="Shobha Digital Studio — home">
+    <a href={localized('/', lang)} class="shrink-0" aria-label="Shobha Digital Studio — home">
       <Logo tone="light" />
     </a>
 
     <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
       {nav.map((item) => (
         <a
-          href={href(item.path)}
+          href={navHref(item.path, lang)}
           class:list={[
             'text-sm uppercase tracking-[0.15em] transition-colors',
             isActive(item.path) ? 'text-gold' : 'text-cream/85 hover:text-gold',
           ]}
         >
-          {item.label}
+          {t(item.key)}
         </a>
       ))}
     </nav>
 
-    <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-gold hidden lg:inline-flex">
-      <Icon name="whatsapp" size={16} /> Enquire
-    </a>
+    <div class="hidden items-center gap-4 lg:flex">
+      <a href={alt.href} class="text-sm font-semibold text-cream/85 transition-colors hover:text-gold" hreflang={alt.lang} aria-label={`Switch language to ${languages[alt.lang]}`}>
+        {languages[alt.lang]}
+      </a>
+      <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-gold">
+        <Icon name="whatsapp" size={16} /> {t('cta.enquire')}
+      </a>
+    </div>
 
     <button
       id="menu-open"
@@ -71,12 +80,15 @@ function isActive(path: string) {
     </div>
     <nav class="flex flex-col items-center gap-7 pt-14" aria-label="Mobile">
       {nav.map((item) => (
-        <a href={href(item.path)} class="font-serif text-3xl text-cream transition-colors hover:text-gold">
-          {item.label}
+        <a href={navHref(item.path, lang)} class="font-serif text-3xl text-cream transition-colors hover:text-gold">
+          {t(item.key)}
         </a>
       ))}
-      <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-gold mt-4">
-        <Icon name="whatsapp" size={16} /> Enquire on WhatsApp
+      <a href={alt.href} hreflang={alt.lang} class="mt-2 rounded-full border border-cream/40 px-5 py-2 text-sm font-semibold text-cream transition-colors hover:border-gold hover:text-gold">
+        {languages[alt.lang]}
+      </a>
+      <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-gold mt-2">
+        <Icon name="whatsapp" size={16} /> {t('cta.enquireWhatsApp')}
       </a>
     </nav>
   </div>

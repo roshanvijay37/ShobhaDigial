@@ -4,14 +4,17 @@ import Logo from './Logo.astro';
 import { href } from '../lib/url';
 import { site, whatsappUrl, telUrl, mapsUrl } from '../data/site';
 import { areas } from '../data/areas';
+import { useTranslations, asLang, navHref } from '../i18n/utils';
 
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
 const year = 2026; // build-time constant (Date.now is unavailable in this env)
 const nav = [
-  { label: 'Home', path: '/' },
-  { label: 'Portfolio', path: '/portfolio' },
-  { label: 'Services', path: '/services' },
-  { label: 'About', path: '/about' },
-  { label: 'Contact', path: '/contact' },
+  { key: 'nav.home' as const, path: '/' },
+  { key: 'nav.portfolio' as const, path: '/portfolio' },
+  { key: 'nav.services' as const, path: '/services' },
+  { key: 'nav.about' as const, path: '/about' },
+  { key: 'nav.contact' as const, path: '/contact' },
 ];
 ---
 <footer class="bg-maroon-dark text-cream/80">
@@ -41,18 +44,18 @@ const nav = [
     </div>
 
     <div class="md:col-span-3">
-      <h3 class="text-xs font-semibold uppercase tracking-[0.25em] text-gold">Explore</h3>
+      <h3 class="text-xs font-semibold uppercase tracking-[0.25em] text-gold">{t('footer.explore')}</h3>
       <ul class="mt-5 space-y-3 text-sm">
         {nav.map((item) => (
           <li>
-            <a href={href(item.path)} class="text-cream/75 transition-colors hover:text-gold">{item.label}</a>
+            <a href={navHref(item.path, lang)} class="text-cream/75 transition-colors hover:text-gold">{t(item.key)}</a>
           </li>
         ))}
       </ul>
     </div>
 
     <div class="md:col-span-4">
-      <h3 class="text-xs font-semibold uppercase tracking-[0.25em] text-gold">Visit & Contact</h3>
+      <h3 class="text-xs font-semibold uppercase tracking-[0.25em] text-gold">{t('footer.visit')}</h3>
       <ul class="mt-5 space-y-4 text-sm text-cream/75">
         <li class="flex items-start gap-3">
           <Icon name="map-pin" size={18} class="mt-0.5 shrink-0 text-gold" />
@@ -80,7 +83,7 @@ const nav = [
 
   <div class="border-t border-cream/10">
     <div class="shell py-6">
-      <span class="text-xs font-semibold uppercase tracking-[0.25em] text-gold">Wedding photographer in</span>
+      <span class="text-xs font-semibold uppercase tracking-[0.25em] text-gold">{t('footer.areas')}</span>
       <div class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-cream/70">
         {areas.map((a) => (
           <a href={href(`/wedding-photographer/${a.slug}`)} class="transition-colors hover:text-gold">{a.place}</a>
@@ -91,8 +94,8 @@ const nav = [
 
   <div class="border-t border-cream/10">
     <div class="shell flex flex-col items-center justify-between gap-2 py-6 pb-24 text-xs text-cream/50 sm:flex-row sm:pb-10">
-      <p>© {year} {site.name}, {site.place}. All rights reserved.</p>
-      <p>Photography & cinematography by {site.owner}.</p>
+      <p>© {year} {site.name}, {site.place}. {t('footer.rights')}</p>
+      <p>{t('footer.by')} {site.owner}.</p>
     </div>
   </div>
 </footer>

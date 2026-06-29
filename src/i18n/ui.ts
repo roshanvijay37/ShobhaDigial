@@ -1,0 +1,98 @@
+// UI + page string dictionary. Kannada is a DRAFT (machine-assisted) — have
+// Devanand (native speaker) review before public launch. English is canonical.
+export const languages = { en: 'English', kn: 'ಕನ್ನಡ' } as const;
+export type Lang = keyof typeof languages;
+export const defaultLang: Lang = 'en';
+
+export const ui = {
+  en: {
+    'nav.home': 'Home',
+    'nav.portfolio': 'Portfolio',
+    'nav.services': 'Services',
+    'nav.about': 'About',
+    'nav.contact': 'Contact',
+    'cta.enquire': 'Enquire',
+    'cta.enquireWhatsApp': 'Enquire on WhatsApp',
+    'cta.viewPortfolio': 'View Portfolio',
+    'cta.contactUs': 'Contact Us',
+    'cta.viewFull': 'View Full Portfolio',
+    'cta.ourStory': 'Our Story',
+    'cta.whatWeOffer': 'What We Offer',
+    'cta.sayHello': 'Say hello',
+    'hero.sub':
+      'Weddings · Pre-weddings · Kids · Temple festivals and Yakshagana — photography and cinematography from the heart of Belvai, for all of Dakshina Kannada.',
+    'about.eyebrow': 'Namaskara from Belvai',
+    'about.title': 'A studio that belongs to its people',
+    'about.p1':
+      'Led by Devanand Bhat, Shobha Digital Studio has been part of life in Belvai and around Moodbidri for years — from temple festivals and Yakshagana nights to weddings, naming ceremonies and the first portraits of a newborn.',
+    'about.p2':
+      'We bring a quiet, respectful eye to every occasion, and the craft of a full digital studio — photography, cinematography, album design and printing, all under one roof.',
+    'stats.belvai': 'Belvai',
+    'stats.belvai.label': 'Rooted in our community',
+    'stats.photofilm': 'Photo & Film',
+    'stats.photofilm.label': 'Captured under one roof',
+    'stats.tradition': 'Every Tradition',
+    'stats.tradition.label': 'Temple, wedding & beyond',
+    'services.eyebrow': 'What we do',
+    'services.title': 'Services crafted for every occasion',
+    'featured.eyebrow': 'Selected work',
+    'featured.title': 'Moments we have framed',
+    'films.eyebrow': 'On screen',
+    'films.title': 'Films & cinematography',
+    'faq.eyebrow': 'Good to know',
+    'faq.title': 'Frequently asked questions',
+    'final.title': "Let's capture your story",
+    'final.sub':
+      "Planning a wedding, a function or a shoot for your little one? We'd love to hear about it.",
+    'footer.explore': 'Explore',
+    'footer.visit': 'Visit & Contact',
+    'footer.areas': 'Wedding photographer in',
+    'footer.rights': 'All rights reserved.',
+    'footer.by': 'Photography & cinematography by',
+  },
+  kn: {
+    'nav.home': 'ಮುಖಪುಟ',
+    'nav.portfolio': 'ಚಿತ್ರಸಂಗ್ರಹ',
+    'nav.services': 'ಸೇವೆಗಳು',
+    'nav.about': 'ನಮ್ಮ ಬಗ್ಗೆ',
+    'nav.contact': 'ಸಂಪರ್ಕ',
+    'cta.enquire': 'ವಿಚಾರಿಸಿ',
+    'cta.enquireWhatsApp': 'ವಾಟ್ಸ್‌ಆ್ಯಪ್‌ನಲ್ಲಿ ವಿಚಾರಿಸಿ',
+    'cta.viewPortfolio': 'ಚಿತ್ರಸಂಗ್ರಹ ನೋಡಿ',
+    'cta.contactUs': 'ಸಂಪರ್ಕಿಸಿ',
+    'cta.viewFull': 'ಸಂಪೂರ್ಣ ಚಿತ್ರಸಂಗ್ರಹ ನೋಡಿ',
+    'cta.ourStory': 'ನಮ್ಮ ಕಥೆ',
+    'cta.whatWeOffer': 'ನಮ್ಮ ಸೇವೆಗಳು',
+    'cta.sayHello': 'ನಮಸ್ಕಾರ ಹೇಳಿ',
+    'hero.sub':
+      'ಮದುವೆಗಳು · ಪ್ರೀ-ವೆಡ್ಡಿಂಗ್ · ಮಕ್ಕಳು · ದೇವಸ್ಥಾನದ ಉತ್ಸವಗಳು ಮತ್ತು ಯಕ್ಷಗಾನ — ಬೆಳ್ವಾಯಿಯ ಹೃದಯದಿಂದ, ಇಡೀ ದಕ್ಷಿಣ ಕನ್ನಡಕ್ಕಾಗಿ ಛಾಯಾಗ್ರಹಣ ಮತ್ತು ಚಿತ್ರೀಕರಣ.',
+    'about.eyebrow': 'ಬೆಳ್ವಾಯಿಯಿಂದ ನಮಸ್ಕಾರ',
+    'about.title': 'ತನ್ನ ಜನರಿಗೆ ಸೇರಿದ ಸ್ಟುಡಿಯೋ',
+    'about.p1':
+      'ದೇವಾನಂದ ಭಟ್ ಅವರ ನೇತೃತ್ವದಲ್ಲಿ, ಶೋಭಾ ಡಿಜಿಟಲ್ ಸ್ಟುಡಿಯೋ ಹಲವು ವರ್ಷಗಳಿಂದ ಬೆಳ್ವಾಯಿ ಮತ್ತು ಮೂಡಬಿದಿರೆ ಸುತ್ತಮುತ್ತಲಿನ ಜೀವನದ ಭಾಗವಾಗಿದೆ — ದೇವಸ್ಥಾನದ ಉತ್ಸವಗಳು ಮತ್ತು ಯಕ್ಷಗಾನ ರಾತ್ರಿಗಳಿಂದ ಹಿಡಿದು ಮದುವೆಗಳು, ನಾಮಕರಣ ಸಮಾರಂಭಗಳು ಮತ್ತು ನವಜಾತ ಶಿಶುವಿನ ಮೊದಲ ಭಾವಚಿತ್ರಗಳವರೆಗೆ.',
+    'about.p2':
+      'ಪ್ರತಿ ಸಂದರ್ಭಕ್ಕೂ ನಾವು ಶಾಂತ ಹಾಗೂ ಗೌರವಪೂರ್ಣ ದೃಷ್ಟಿಯನ್ನು, ಮತ್ತು ಸಂಪೂರ್ಣ ಡಿಜಿಟಲ್ ಸ್ಟುಡಿಯೋದ ಕೌಶಲ್ಯವನ್ನು ತರುತ್ತೇವೆ — ಛಾಯಾಗ್ರಹಣ, ಚಿತ್ರೀಕರಣ, ಆಲ್ಬಮ್ ವಿನ್ಯಾಸ ಮತ್ತು ಮುದ್ರಣ, ಎಲ್ಲವೂ ಒಂದೇ ಸೂರಿನಡಿ.',
+    'stats.belvai': 'ಬೆಳ್ವಾಯಿ',
+    'stats.belvai.label': 'ನಮ್ಮ ಸಮುದಾಯದಲ್ಲಿ ಬೇರೂರಿದೆ',
+    'stats.photofilm': 'ಫೋಟೋ & ಫಿಲ್ಮ್',
+    'stats.photofilm.label': 'ಒಂದೇ ಸೂರಿನಡಿ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ',
+    'stats.tradition': 'ಪ್ರತಿ ಸಂಪ್ರದಾಯ',
+    'stats.tradition.label': 'ದೇವಸ್ಥಾನ, ಮದುವೆ ಮತ್ತು ಮುಂದೆ',
+    'services.eyebrow': 'ನಾವು ಏನು ಮಾಡುತ್ತೇವೆ',
+    'services.title': 'ಪ್ರತಿ ಸಂದರ್ಭಕ್ಕೂ ರೂಪಿಸಿದ ಸೇವೆಗಳು',
+    'featured.eyebrow': 'ಆಯ್ದ ಕೆಲಸಗಳು',
+    'featured.title': 'ನಾವು ಸೆರೆಹಿಡಿದ ಕ್ಷಣಗಳು',
+    'films.eyebrow': 'ತೆರೆಯ ಮೇಲೆ',
+    'films.title': 'ಚಲನಚಿತ್ರಗಳು & ಚಿತ್ರೀಕರಣ',
+    'faq.eyebrow': 'ತಿಳಿದಿರಲಿ',
+    'faq.title': 'ಪದೇ ಪದೇ ಕೇಳುವ ಪ್ರಶ್ನೆಗಳು',
+    'final.title': 'ನಿಮ್ಮ ಕಥೆಯನ್ನು ಸೆರೆಹಿಡಿಯೋಣ',
+    'final.sub':
+      'ಮದುವೆ, ಸಮಾರಂಭ ಅಥವಾ ನಿಮ್ಮ ಪುಟ್ಟ ಮಗುವಿಗೆ ಶೂಟ್ ಯೋಜಿಸುತ್ತಿದ್ದೀರಾ? ನಮಗೆ ತಿಳಿಸಿ.',
+    'footer.explore': 'ಅನ್ವೇಷಿಸಿ',
+    'footer.visit': 'ಭೇಟಿ ಮತ್ತು ಸಂಪರ್ಕ',
+    'footer.areas': 'ಮದುವೆ ಛಾಯಾಗ್ರಾಹಕ —',
+    'footer.rights': 'ಎಲ್ಲ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.',
+    'footer.by': 'ಛಾಯಾಗ್ರಹಣ ಮತ್ತು ಚಿತ್ರೀಕರಣ —',
+  },
+} as const;
