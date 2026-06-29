@@ -1,0 +1,168 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { getImage } from '../lib/images';
+import type { PortfolioItem } from '../data/portfolio';
+
+interface Props {
+  items: PortfolioItem[];
+  filters?: string[];
+}
+const { items, filters } = Astro.props;
+
+const prepared = items.map((item) => ({ ...item, meta: getImage(item.file) }));
+---
+{filters && filters.length > 1 && (
+  <div class="mb-10 flex flex-wrap items-center justify-center gap-2" role="tablist" aria-label="Filter gallery">
+    {filters.map((cat, i) => (
+      <button
+        type="button"
+        data-filter={cat}
+        class:list={[
+          'gallery-filter rounded-full border px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-colors',
+          i === 0
+            ? 'border-maroon bg-maroon text-cream'
+            : 'border-maroon/25 text-maroon hover:border-maroon hover:bg-maroon/5',
+        ]}
+        aria-pressed={i === 0 ? 'true' : 'false'}
+      >
+        {cat}
+      </button>
+    ))}
+  </div>
+)}
+
+<div id="gallery-grid" class="gap-4 [column-fill:_balance] sm:columns-2 lg:columns-3">
+  {prepared.map((p) => (
+    <figure
+      class="gallery-item group mb-4 break-inside-avoid"
+      data-category={p.category}
+    >
+      <button
+        type="button"
+        class="gallery-open relative block w-full overflow-hidden rounded-lg"
+        data-alt={p.alt}
+        data-title={p.title}
+        data-cat={p.category}
+        aria-label={`View ${p.title}`}
+      >
+        <Image
+          src={p.meta}
+          widths={[400, 800, 1280]}
+          sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+          alt={p.alt}
+          loading="lazy"
+          class="h-auto w-full transform-gpu transition duration-700 ease-out group-hover:scale-105"
+        />
+        <span class="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-maroon-dark/70 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+          <span class="p-5">
+            <span class="block text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-gold-light">{p.category}</span>
+            <span class="mt-1 block font-serif text-xl text-cream">{p.title}</span>
+          </span>
+        </span>
+      </button>
+    </figure>
+  ))}
+</div>
+
+<!-- Lightbox -->
+<div
+  id="lightbox"
+  class="fixed inset-0 z-[60] hidden items-center justify-center bg-maroon-dark/95 backdrop-blur"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Image viewer"
+>
+  <button id="lb-close" class="absolute right-4 top-4 text-cream/80 hover:text-gold" aria-label="Close">
+    <Icon name="close" size={30} />
+  </button>
+  <button id="lb-prev" class="absolute left-3 top-1/2 -translate-y-1/2 text-cream/80 hover:text-gold sm:left-6" aria-label="Previous">
+    <Icon name="chevron-left" size={40} />
+  </button>
+  <button id="lb-next" class="absolute right-3 top-1/2 -translate-y-1/2 text-cream/80 hover:text-gold sm:right-6" aria-label="Next">
+    <Icon name="chevron-right" size={40} />
+  </button>
+  <figure class="flex max-h-[88vh] max-w-[92vw] flex-col items-center gap-3">
+    <img id="lb-img" src="" alt="" class="max-h-[80vh] max-w-[92vw] rounded-lg object-contain shadow-2xl" />
+    <figcaption class="text-center">
+      <span id="lb-cat" class="block text-[0.65rem] font-semibold uppercase tracking-[0.25em] text-gold-light"></span>
+      <span id="lb-title" class="mt-1 block font-serif text-xl text-cream"></span>
+    </figcaption>
+  </figure>
+</div>
+
+<script>
+  // ── Filtering ──────────────────────────────────────────────────────────
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.gallery-filter');
+  const figures = Array.from(document.querySelectorAll<HTMLElement>('.gallery-item'));
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.filter;
+      filterBtns.forEach((b) => {
+        const active = b === btn;
+        b.classList.toggle('bg-maroon', active);
+        b.classList.toggle('text-cream', active);
+        b.classList.toggle('border-maroon', active);
+        b.classList.toggle('text-maroon', !active);
+        b.classList.toggle('border-maroon/25', !active);
+        b.setAttribute('aria-pressed', String(active));
+      });
+      figures.forEach((fig) => {
+        const show = cat === 'All' || fig.dataset.category === cat;
+        fig.classList.toggle('hidden', !show);
+      });
+    });
+  });
+
+  // ── Lightbox ───────────────────────────────────────────────────────────
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img') as HTMLImageElement | null;
+  const lbCat = document.getElementById('lb-cat');
+  const lbTitle = document.getElementById('lb-title');
+  let visible: HTMLButtonElement[] = [];
+  let index = 0;
+
+  const openers = Array.from(document.querySelectorAll<HTMLButtonElement>('.gallery-open'));
+
+  function render() {
+    const btn = visible[index];
+    if (!btn || !lbImg) return;
+    const img = btn.querySelector('img');
+    lbImg.src = img?.getAttribute('src') || '';
+    lbImg.alt = btn.dataset.alt || '';
+    if (lbCat) lbCat.textContent = btn.dataset.cat || '';
+    if (lbTitle) lbTitle.textContent = btn.dataset.title || '';
+  }
+  function open(btn: HTMLButtonElement) {
+    visible = openers.filter((b) => !b.closest('.gallery-item')?.classList.contains('hidden'));
+    index = Math.max(0, visible.indexOf(btn));
+    render();
+    lightbox?.classList.remove('hidden');
+    lightbox?.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    lightbox?.classList.add('hidden');
+    lightbox?.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+  const step = (dir: number) => {
+    if (!visible.length) return;
+    index = (index + dir + visible.length) % visible.length;
+    render();
+  };
+
+  openers.forEach((btn) => btn.addEventListener('click', () => open(btn)));
+  document.getElementById('lb-close')?.addEventListener('click', close);
+  document.getElementById('lb-prev')?.addEventListener('click', () => step(-1));
+  document.getElementById('lb-next')?.addEventListener('click', () => step(1));
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (lightbox?.classList.contains('hidden')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+</script>

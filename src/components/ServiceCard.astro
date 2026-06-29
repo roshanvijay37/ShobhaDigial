@@ -1,0 +1,20 @@
+---
+import Icon from './Icon.astro';
+import type { Service } from '../data/services';
+interface Props {
+  service: Service;
+}
+const { service } = Astro.props;
+---
+<article class="group flex h-full flex-col rounded-xl border border-maroon/10 bg-white/50 p-7 transition duration-300 hover:-translate-y-1 hover:border-gold/50 hover:bg-white hover:shadow-xl hover:shadow-maroon/5">
+  <div class="grid h-12 w-12 place-items-center rounded-full bg-maroon text-gold transition-colors duration-300 group-hover:bg-gold group-hover:text-maroon">
+    <Icon name={service.icon} size={22} />
+  </div>
+  <h3 class="mt-5 font-serif text-2xl text-ink">{service.title}</h3>
+  <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">{service.blurb}</p>
+  <ul class="mt-5 flex flex-wrap gap-2">
+    {service.points.map((pt) => (
+      <li class="rounded-full bg-cream-2 px-3 py-1 text-xs font-medium text-maroon">{pt}</li>
+    ))}
+  </ul>
+</article>

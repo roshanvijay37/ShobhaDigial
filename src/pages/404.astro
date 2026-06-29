@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { href } from '../lib/url';
+---
+<BaseLayout title="Page not found" noindex={true}>
+  <section class="grid min-h-[60vh] place-items-center bg-cream py-24 text-center">
+    <div class="shell">
+      <p class="font-serif text-7xl text-gold">404</p>
+      <h1 class="mt-4 font-serif text-4xl text-ink">This page has wandered off</h1>
+      <p class="mx-auto mt-4 max-w-md text-muted">
+        The page you're looking for doesn't exist or has moved. Let's get you back to the good stuff.
+      </p>
+      <div class="mt-8">
+        <a href={href('/')} class="btn btn-primary">Back to Home <Icon name="arrow-right" size={16} /></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

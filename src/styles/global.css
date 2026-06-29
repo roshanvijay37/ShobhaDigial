@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+/* ── Theme: Warm Traditional (maroon · gold · cream) ─────────────────────── */
+@theme {
+  --color-cream: #f7f1e6;
+  --color-cream-2: #efe6d2;
+  --color-maroon: #6e1423;
+  --color-maroon-light: #8c1c2f;
+  --color-maroon-dark: #4a0d17;
+  --color-gold: #c8a24a;
+  --color-gold-light: #dfc078;
+  --color-ink: #2a2320;
+  --color-muted: #6b5e54;
+
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Mukta", system-ui, -apple-system, sans-serif;
+  --font-kannada: "Noto Sans Kannada", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.005em;
+  }
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-maroon-dark);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  /* Buttons — use as `class="btn btn-primary"` */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3 text-xs font-semibold uppercase tracking-[0.16em] transition duration-300 ease-out;
+  }
+  .btn-primary { @apply bg-maroon text-cream shadow-lg; }
+  .btn-primary:hover { @apply bg-maroon-light -translate-y-0.5; }
+  .btn-gold { @apply bg-gold text-maroon-dark; }
+  .btn-gold:hover { @apply bg-gold-light -translate-y-0.5; }
+  .btn-outline { @apply border border-gold/50 text-ink; }
+  .btn-outline:hover { @apply border-gold bg-gold/10; }
+  .btn-ghost-light { @apply border border-cream/40 text-cream; }
+  .btn-ghost-light:hover { @apply bg-cream/10 -translate-y-0.5; }
+
+  /* Small uppercase label above headings (color is passed by the caller) */
+  .eyebrow {
+    @apply inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em];
+  }
+
+  /* Scroll-reveal animation (toggled by IntersectionObserver in BaseLayout) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Decorative gold rule with a centered diamond */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  color: var(--color-gold);
+}
+.divider::before,
+.divider::after {
+  content: "";
+  height: 1px;
+  width: clamp(2rem, 12vw, 5rem);
+  background: linear-gradient(to right, transparent, var(--color-gold));
+}
+.divider::after { transform: scaleX(-1); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,94 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import { href } from '../lib/url';
+import { whatsappUrl } from '../data/site';
+
+const nav = [
+  { label: 'Home', path: '/' },
+  { label: 'Portfolio', path: '/portfolio' },
+  { label: 'Services', path: '/services' },
+  { label: 'About', path: '/about' },
+  { label: 'Contact', path: '/contact' },
+];
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const current = Astro.url.pathname.replace(/\/+$/, '') || '/';
+function isActive(path: string) {
+  const target = base + (path === '/' ? '' : path) || '/';
+  if (path === '/') return current === (base || '/');
+  return current === target || current.startsWith(target + '/');
+}
+---
+<header class="sticky top-0 z-40 border-b border-gold/25 bg-maroon/95 backdrop-blur supports-[backdrop-filter]:bg-maroon/90">
+  <div class="shell flex h-16 items-center justify-between gap-4">
+    <a href={href('/')} class="shrink-0" aria-label="Shobha Digital Studio — home">
+      <Logo tone="light" />
+    </a>
+
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
+      {nav.map((item) => (
+        <a
+          href={href(item.path)}
+          class:list={[
+            'text-sm uppercase tracking-[0.15em] transition-colors',
+            isActive(item.path) ? 'text-gold' : 'text-cream/85 hover:text-gold',
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-gold hidden lg:inline-flex">
+      <Icon name="whatsapp" size={16} /> Enquire
+    </a>
+
+    <button
+      id="menu-open"
+      class="text-cream lg:hidden"
+      aria-label="Open menu"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+    >
+      <Icon name="menu" size={26} />
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="fixed inset-0 z-50 hidden bg-maroon-dark/98 backdrop-blur lg:hidden">
+    <div class="flex h-16 items-center justify-between px-5 sm:px-8">
+      <Logo tone="light" />
+      <button id="menu-close" class="text-cream" aria-label="Close menu">
+        <Icon name="close" size={26} />
+      </button>
+    </div>
+    <nav class="flex flex-col items-center gap-7 pt-14" aria-label="Mobile">
+      {nav.map((item) => (
+        <a href={href(item.path)} class="font-serif text-3xl text-cream transition-colors hover:text-gold">
+          {item.label}
+        </a>
+      ))}
+      <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-gold mt-4">
+        <Icon name="whatsapp" size={16} /> Enquire on WhatsApp
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const openBtn = document.getElementById('menu-open');
+  const closeBtn = document.getElementById('menu-close');
+  const menu = document.getElementById('mobile-menu');
+  const setOpen = (show: boolean) => {
+    if (!menu) return;
+    menu.classList.toggle('hidden', !show);
+    openBtn?.setAttribute('aria-expanded', String(show));
+    document.body.style.overflow = show ? 'hidden' : '';
+  };
+  openBtn?.addEventListener('click', () => setOpen(true));
+  closeBtn?.addEventListener('click', () => setOpen(false));
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+</script>

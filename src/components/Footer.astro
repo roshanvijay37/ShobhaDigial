@@ -1,0 +1,86 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import { href } from '../lib/url';
+import { site, whatsappUrl, telUrl, mapsUrl } from '../data/site';
+
+const year = 2026; // build-time constant (Date.now is unavailable in this env)
+const nav = [
+  { label: 'Home', path: '/' },
+  { label: 'Portfolio', path: '/portfolio' },
+  { label: 'Services', path: '/services' },
+  { label: 'About', path: '/about' },
+  { label: 'Contact', path: '/contact' },
+];
+---
+<footer class="bg-maroon-dark text-cream/80">
+  <div class="shell grid gap-12 py-16 md:grid-cols-12">
+    <div class="md:col-span-5">
+      <Logo tone="light" />
+      <p class="mt-6 max-w-sm text-sm leading-relaxed text-cream/70">
+        {site.intro}
+      </p>
+      <div class="mt-6 flex items-center gap-3">
+        <a href={site.social.instagram} target="_blank" rel="noopener"
+           class="grid h-10 w-10 place-items-center rounded-full border border-cream/20 transition-colors hover:border-gold hover:text-gold"
+           aria-label="Instagram">
+          <Icon name="instagram" size={18} />
+        </a>
+        <a href={site.social.facebook} target="_blank" rel="noopener"
+           class="grid h-10 w-10 place-items-center rounded-full border border-cream/20 transition-colors hover:border-gold hover:text-gold"
+           aria-label="Facebook">
+          <Icon name="facebook" size={18} />
+        </a>
+        <a href={whatsappUrl()} target="_blank" rel="noopener"
+           class="grid h-10 w-10 place-items-center rounded-full border border-cream/20 transition-colors hover:border-gold hover:text-gold"
+           aria-label="WhatsApp">
+          <Icon name="whatsapp" size={18} />
+        </a>
+      </div>
+    </div>
+
+    <div class="md:col-span-3">
+      <h3 class="text-xs font-semibold uppercase tracking-[0.25em] text-gold">Explore</h3>
+      <ul class="mt-5 space-y-3 text-sm">
+        {nav.map((item) => (
+          <li>
+            <a href={href(item.path)} class="text-cream/75 transition-colors hover:text-gold">{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="md:col-span-4">
+      <h3 class="text-xs font-semibold uppercase tracking-[0.25em] text-gold">Visit & Contact</h3>
+      <ul class="mt-5 space-y-4 text-sm text-cream/75">
+        <li class="flex items-start gap-3">
+          <Icon name="map-pin" size={18} class="mt-0.5 shrink-0 text-gold" />
+          <a href={mapsUrl()} target="_blank" rel="noopener" class="hover:text-gold">
+            {site.address.line1}, {site.address.line2}, {site.address.region} {site.address.postalCode}
+          </a>
+        </li>
+        <li class="flex items-center gap-3">
+          <Icon name="phone" size={18} class="shrink-0 text-gold" />
+          <a href={telUrl()} class="hover:text-gold">{site.phoneDisplay}</a>
+        </li>
+        {site.email && (
+          <li class="flex items-center gap-3">
+            <Icon name="mail" size={18} class="shrink-0 text-gold" />
+            <a href={`mailto:${site.email}`} class="hover:text-gold">{site.email}</a>
+          </li>
+        )}
+        <li class="flex items-center gap-3">
+          <Icon name="clock" size={18} class="shrink-0 text-gold" />
+          <span>{site.hours}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-cream/10">
+    <div class="shell flex flex-col items-center justify-between gap-2 py-6 text-xs text-cream/50 sm:flex-row">
+      <p>© {year} {site.name}, {site.place}. All rights reserved.</p>
+      <p>Photography & cinematography by {site.owner}.</p>
+    </div>
+  </div>
+</footer>

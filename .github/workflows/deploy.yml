@@ -1,0 +1,47 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; don't cancel an in-progress production deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build with Astro
+        uses: withastro/action@v3
+        # withastro/action installs deps, runs `astro build`, and uploads the
+        # Pages artifact. We pass deployment config through env vars that
+        # astro.config.mjs reads.
+        env:
+          # On a GitHub project page the site lives under /<repo>/. Override by
+          # setting a repo variable BASE_PATH (use "/" once a custom domain is
+          # attached). Define repo variables in: Settings → Secrets and
+          # variables → Actions → Variables.
+          BASE_PATH: ${{ vars.BASE_PATH || format('/{0}', github.event.repository.name) }}
+          SITE_URL: ${{ vars.SITE_URL }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

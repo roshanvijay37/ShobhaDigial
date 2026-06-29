@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { href } from '../lib/url';
+import { site, whatsappUrl } from '../data/site';
+import { getImage } from '../lib/images';
+
+const hero = getImage('temple-river-procession.jpeg');
+---
+<section class="relative isolate flex min-h-[88vh] items-center overflow-hidden">
+  <Image
+    src={hero}
+    widths={[768, 1280, 1920, 2400]}
+    sizes="100vw"
+    alt=""
+    loading="eager"
+    fetchpriority="high"
+    class="absolute inset-0 -z-20 h-full w-full object-cover"
+  />
+  <div class="absolute inset-0 -z-10 bg-gradient-to-b from-maroon-dark/75 via-maroon-dark/55 to-maroon-dark/85"></div>
+
+  <div class="shell py-24 text-center">
+    <p class="font-kannada text-lg text-gold-light sm:text-xl">{site.taglineKannada}</p>
+    <h1 class="mx-auto mt-5 max-w-4xl font-serif text-5xl font-semibold text-cream sm:text-7xl">
+      Shobha Digital Studio
+    </h1>
+    <div class="divider mx-auto mt-6 max-w-xs text-gold" aria-hidden="true">◆</div>
+    <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-cream/85 sm:text-lg">
+      Weddings · Pre-weddings · Kids · Temple festivals &amp; Yakshagana — photography and
+      cinematography from the heart of Belvai, for all of Dakshina Kannada.
+    </p>
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+      <a href={href('/portfolio')} class="btn btn-gold">
+        View Portfolio <Icon name="arrow-right" size={16} />
+      </a>
+      <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-ghost-light">
+        <Icon name="whatsapp" size={16} /> Enquire on WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <a
+    href={href('/portfolio')}
+    class="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-cream/70 transition-colors hover:text-gold sm:flex"
+    aria-label="Scroll to explore"
+  >
+    <span class="text-[0.6rem] font-semibold uppercase tracking-[0.3em]">Explore</span>
+    <span class="h-10 w-px animate-pulse bg-gold/60"></span>
+  </a>
+</section>

@@ -1,0 +1,120 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { getImage, hasImage } from '../lib/images';
+import type { Film } from '../data/portfolio';
+
+interface Props {
+  films: Film[];
+}
+const { films } = Astro.props;
+const prepared = films.map((f) => ({
+  ...f,
+  poster: f.posterFile && hasImage(f.posterFile) ? getImage(f.posterFile) : null,
+}));
+---
+<div class="grid gap-6 md:grid-cols-3">
+  {prepared.map((film) => {
+    const live = Boolean(film.youtubeId);
+    return (
+      <article class="group overflow-hidden rounded-xl border border-cream/10 bg-maroon-dark/40">
+        <button
+          type="button"
+          class:list={[
+            'film-open relative block aspect-video w-full overflow-hidden',
+            !live && 'cursor-default',
+          ]}
+          data-yt={film.youtubeId}
+          data-title={film.title}
+          disabled={!live}
+          aria-label={live ? `Play ${film.title}` : `${film.title} — coming soon`}
+        >
+          {film.poster ? (
+            <Image
+              src={film.poster}
+              widths={[400, 800]}
+              sizes="(min-width:768px) 33vw, 100vw"
+              alt={film.title}
+              loading="lazy"
+              class="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+            />
+          ) : (
+            <span class="absolute inset-0 bg-gradient-to-br from-maroon via-maroon-dark to-ink"></span>
+          )}
+          <span class="absolute inset-0 bg-maroon-dark/40 transition-colors group-hover:bg-maroon-dark/25"></span>
+          <span class="absolute inset-0 grid place-items-center">
+            {live ? (
+              <span class="grid h-16 w-16 place-items-center rounded-full bg-cream/90 text-maroon shadow-lg transition-transform duration-300 group-hover:scale-110">
+                <Icon name="play" size={26} />
+              </span>
+            ) : (
+              <span class="rounded-full border border-gold/50 bg-maroon-dark/60 px-4 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-gold-light">
+                Coming soon
+              </span>
+            )}
+          </span>
+        </button>
+        <div class="p-5">
+          <span class="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-gold-light">{film.category}</span>
+          <h3 class="mt-1 font-serif text-xl text-cream">{film.title}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-cream/65">{film.description}</p>
+        </div>
+      </article>
+    );
+  })}
+</div>
+
+<!-- Film lightbox -->
+<div
+  id="film-lightbox"
+  class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/92 p-4 backdrop-blur"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Film player"
+>
+  <button id="film-close" class="absolute right-4 top-4 text-cream/80 hover:text-gold" aria-label="Close">
+    <Icon name="close" size={30} />
+  </button>
+  <div class="aspect-video w-full max-w-4xl overflow-hidden rounded-lg shadow-2xl">
+    <iframe
+      id="film-frame"
+      class="h-full w-full"
+      src=""
+      title="Film player"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+</div>
+
+<script>
+  const lb = document.getElementById('film-lightbox');
+  const frame = document.getElementById('film-frame') as HTMLIFrameElement | null;
+  const openFilm = (id: string) => {
+    if (!frame || !lb) return;
+    frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+    lb.classList.remove('hidden');
+    lb.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeFilm = () => {
+    if (!frame || !lb) return;
+    frame.src = '';
+    lb.classList.add('hidden');
+    lb.classList.remove('flex');
+    document.body.style.overflow = '';
+  };
+  document.querySelectorAll<HTMLButtonElement>('.film-open').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.yt;
+      if (id) openFilm(id);
+    });
+  });
+  document.getElementById('film-close')?.addEventListener('click', closeFilm);
+  lb?.addEventListener('click', (e) => {
+    if (e.target === lb) closeFilm();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !lb?.classList.contains('hidden')) closeFilm();
+  });
+</script>

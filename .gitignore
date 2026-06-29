@@ -1,0 +1,35 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.astro/
+.output/
+
+# environment & logs
+.env
+.env.*
+!.env.example
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# editor / OS
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+
+# ── Original client media kept at the repo ROOT only ──────────────────────
+# The heavy source videos and raw photos live at the project root for your
+# reference but must NOT be committed (GitHub rejects files >100MB and Pages
+# bandwidth is limited). Optimized copies under src/assets/ ARE tracked.
+/*.mp4
+/*.mov
+/*.avi
+/*.mkv
+/*.jpg
+/*.jpeg
+/*.png
+/*.heic

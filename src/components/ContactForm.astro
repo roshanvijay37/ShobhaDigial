@@ -1,0 +1,107 @@
+---
+import Icon from './Icon.astro';
+import { site, whatsappUrl } from '../data/site';
+
+const configured = Boolean(site.web3formsKey);
+const fieldClass =
+  'w-full rounded-lg border border-maroon/15 bg-cream px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30';
+---
+<form id="enquiry-form" class="space-y-4">
+  <input type="hidden" name="access_key" value={site.web3formsKey} />
+  <input type="hidden" name="subject" value="New enquiry — Shobha Digital Studio website" />
+  <input type="hidden" name="from_name" value="Shobha Digital Studio Website" />
+  <!-- Honeypot -->
+  <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="name">Name</label>
+      <input id="name" name="name" type="text" required placeholder="Your name" class={fieldClass} />
+    </div>
+    <div>
+      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="phone">Phone / WhatsApp</label>
+      <input id="phone" name="phone" type="tel" required placeholder="+91 " class={fieldClass} />
+    </div>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="event">Occasion</label>
+      <select id="event" name="occasion" class={fieldClass}>
+        <option>Wedding</option>
+        <option>Pre-Wedding</option>
+        <option>Kids / Newborn</option>
+        <option>Temple / Ritual</option>
+        <option>Yakshagana / Stage</option>
+        <option>Portrait / Family</option>
+        <option>Event / Function</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div>
+      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="date">Tentative date</label>
+      <input id="date" name="date" type="date" class={fieldClass} />
+    </div>
+  </div>
+
+  <div>
+    <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="message">Message</label>
+    <textarea id="message" name="message" rows="4" placeholder="Tell us a little about your event…" class={fieldClass}></textarea>
+  </div>
+
+  {!configured && (
+    <p class="rounded-lg border border-gold/40 bg-gold/10 px-4 py-3 text-xs text-maroon">
+      Note: the online form isn't connected yet. Add a free Web3Forms key in
+      <code class="font-mono">src/data/site.ts</code> to start receiving enquiries by email. Meanwhile, the
+      WhatsApp button works.
+    </p>
+  )}
+
+  <div class="flex flex-wrap items-center gap-3">
+    <button type="submit" class="btn btn-primary" disabled={!configured}>
+      <Icon name="mail" size={16} /> Send enquiry
+    </button>
+    <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-outline">
+      <Icon name="whatsapp" size={16} /> Or message on WhatsApp
+    </a>
+  </div>
+
+  <p id="form-status" class="text-sm" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  const form = document.getElementById('enquiry-form') as HTMLFormElement | null;
+  const status = document.getElementById('form-status');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form || !status) return;
+    const data = new FormData(form);
+    const accessKey = (data.get('access_key') || '').toString();
+    if (!accessKey) {
+      status.textContent = 'The form is not configured yet — please reach us on WhatsApp.';
+      status.className = 'text-sm text-maroon';
+      return;
+    }
+    status.textContent = 'Sending…';
+    status.className = 'text-sm text-muted';
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: data,
+      });
+      const json = await res.json();
+      if (json.success) {
+        form.reset();
+        status.textContent = 'Thank you! We will get back to you shortly.';
+        status.className = 'text-sm font-medium text-green-700';
+      } else {
+        status.textContent = json.message || 'Something went wrong. Please try WhatsApp.';
+        status.className = 'text-sm text-red-700';
+      }
+    } catch {
+      status.textContent = 'Network error. Please try again or use WhatsApp.';
+      status.className = 'text-sm text-red-700';
+    }
+  });
+</script>
