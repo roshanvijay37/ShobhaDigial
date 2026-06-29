@@ -1,16 +1,18 @@
 @import "tailwindcss";
 
-/* ── Theme: Warm Traditional (maroon · gold · cream) ─────────────────────── */
+/* ── Theme: Charcoal & Gold (cinematic) ──────────────────────────────────── */
+/* Token names (maroon/cream) are kept for stability; the values below define
+   the active palette. "maroon" now holds the charcoal primary. */
 @theme {
-  --color-cream: #f7f1e6;
-  --color-cream-2: #efe6d2;
-  --color-maroon: #6e1423;
-  --color-maroon-light: #8c1c2f;
-  --color-maroon-dark: #4a0d17;
-  --color-gold: #c8a24a;
-  --color-gold-light: #dfc078;
-  --color-ink: #2a2320;
-  --color-muted: #6b5e54;
+  --color-cream: #f7f4ef;       /* ivory page background */
+  --color-cream-2: #ebe6dc;
+  --color-maroon: #232220;      /* charcoal primary (headers, buttons, bands) */
+  --color-maroon-light: #38352f;
+  --color-maroon-dark: #161513; /* near-black (gradients, footer) */
+  --color-gold: #cda349;        /* refined gold accent */
+  --color-gold-light: #e6c97e;
+  --color-ink: #232220;
+  --color-muted: #6b6258;
 
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-sans: "Mukta", system-ui, -apple-system, sans-serif;
