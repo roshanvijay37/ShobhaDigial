@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage as optimize } from 'astro:assets';
 import Icon from './Icon.astro';
 import { getImage } from '../lib/images';
 import type { PortfolioItem } from '../data/portfolio';
@@ -10,16 +10,29 @@ interface Props {
 }
 const { items, filters } = Astro.props;
 
-const prepared = items.map((item) => ({ ...item, meta: getImage(item.file) }));
+// Resolve each photo + a high-res variant for the lightbox (so the fullscreen
+// view is crisp instead of a blown-up thumbnail).
+const prepared = await Promise.all(
+  items.map(async (item) => {
+    const meta = getImage(item.file);
+    const full = await optimize({
+      src: meta,
+      width: Math.min(2000, meta.width),
+      format: 'webp',
+      quality: 82,
+    });
+    return { ...item, meta, full: full.src };
+  }),
+);
 ---
 {filters && filters.length > 1 && (
-  <div class="mb-10 flex flex-wrap items-center justify-center gap-2" role="tablist" aria-label="Filter gallery">
+  <div class="mb-10 flex flex-wrap items-center justify-center gap-2" role="group" aria-label="Filter gallery">
     {filters.map((cat, i) => (
       <button
         type="button"
         data-filter={cat}
         class:list={[
-          'gallery-filter rounded-full border px-5 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-colors',
+          'gallery-filter inline-flex min-h-[40px] items-center rounded-full border px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] transition-colors',
           i === 0
             ? 'border-maroon bg-maroon text-cream'
             : 'border-maroon/25 text-maroon hover:border-maroon hover:bg-maroon/5',
@@ -34,23 +47,21 @@ const prepared = items.map((item) => ({ ...item, meta: getImage(item.file) }));
 
 <div id="gallery-grid" class="gap-4 [column-fill:_balance] sm:columns-2 lg:columns-3">
   {prepared.map((p) => (
-    <figure
-      class="gallery-item group mb-4 break-inside-avoid"
-      data-category={p.category}
-    >
+    <figure class="gallery-item group mb-4 break-inside-avoid" data-category={p.category}>
       <button
         type="button"
         class="gallery-open relative block w-full overflow-hidden rounded-lg"
+        data-full={p.full}
         data-alt={p.alt}
         data-title={p.title}
         data-cat={p.category}
-        aria-label={`View ${p.title}`}
+        aria-label={p.alt}
       >
         <Image
           src={p.meta}
           widths={[400, 800, 1280]}
           sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-          alt={p.alt}
+          alt=""
           loading="lazy"
           class="h-auto w-full transform-gpu transition duration-700 ease-out group-hover:scale-105"
         />
@@ -68,19 +79,20 @@ const prepared = items.map((item) => ({ ...item, meta: getImage(item.file) }));
 <!-- Lightbox -->
 <div
   id="lightbox"
+  tabindex="-1"
   class="fixed inset-0 z-[60] hidden items-center justify-center bg-maroon-dark/95 backdrop-blur"
   role="dialog"
   aria-modal="true"
   aria-label="Image viewer"
 >
-  <button id="lb-close" class="absolute right-4 top-4 text-cream/80 hover:text-gold" aria-label="Close">
-    <Icon name="close" size={30} />
+  <button id="lb-close" class="absolute right-3 top-3 inline-flex h-11 w-11 items-center justify-center text-cream/80 hover:text-gold" aria-label="Close image viewer">
+    <Icon name="close" size={28} />
   </button>
-  <button id="lb-prev" class="absolute left-3 top-1/2 -translate-y-1/2 text-cream/80 hover:text-gold sm:left-6" aria-label="Previous">
-    <Icon name="chevron-left" size={40} />
+  <button id="lb-prev" class="absolute left-2 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center text-cream/80 hover:text-gold sm:left-5" aria-label="Previous image">
+    <Icon name="chevron-left" size={36} />
   </button>
-  <button id="lb-next" class="absolute right-3 top-1/2 -translate-y-1/2 text-cream/80 hover:text-gold sm:right-6" aria-label="Next">
-    <Icon name="chevron-right" size={40} />
+  <button id="lb-next" class="absolute right-2 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center text-cream/80 hover:text-gold sm:right-5" aria-label="Next image">
+    <Icon name="chevron-right" size={36} />
   </button>
   <figure class="flex max-h-[88vh] max-w-[92vw] flex-col items-center gap-3">
     <img id="lb-img" src="" alt="" class="max-h-[80vh] max-w-[92vw] rounded-lg object-contain shadow-2xl" />
@@ -92,6 +104,8 @@ const prepared = items.map((item) => ({ ...item, meta: getImage(item.file) }));
 </div>
 
 <script>
+  import { createModal } from '../lib/modal';
+
   // ── Filtering ──────────────────────────────────────────────────────────
   const filterBtns = document.querySelectorAll<HTMLButtonElement>('.gallery-filter');
   const figures = Array.from(document.querySelectorAll<HTMLElement>('.gallery-item'));
@@ -115,36 +129,34 @@ const prepared = items.map((item) => ({ ...item, meta: getImage(item.file) }));
   });
 
   // ── Lightbox ───────────────────────────────────────────────────────────
-  const lightbox = document.getElementById('lightbox');
+  const lightboxEl = document.getElementById('lightbox');
   const lbImg = document.getElementById('lb-img') as HTMLImageElement | null;
   const lbCat = document.getElementById('lb-cat');
   const lbTitle = document.getElementById('lb-title');
+  const openers = Array.from(document.querySelectorAll<HTMLButtonElement>('.gallery-open'));
   let visible: HTMLButtonElement[] = [];
   let index = 0;
 
-  const openers = Array.from(document.querySelectorAll<HTMLButtonElement>('.gallery-open'));
+  const modal = lightboxEl ? createModal(lightboxEl) : null;
 
   function render() {
     const btn = visible[index];
     if (!btn || !lbImg) return;
-    const img = btn.querySelector('img');
-    lbImg.src = img?.getAttribute('src') || '';
+    const full = btn.dataset.full || '';
+    const thumb = btn.querySelector('img')?.getAttribute('src') || '';
+    lbImg.onerror = () => {
+      if (thumb && lbImg.src !== thumb) lbImg.src = thumb; // graceful fallback
+    };
+    lbImg.src = full || thumb;
     lbImg.alt = btn.dataset.alt || '';
     if (lbCat) lbCat.textContent = btn.dataset.cat || '';
     if (lbTitle) lbTitle.textContent = btn.dataset.title || '';
   }
-  function open(btn: HTMLButtonElement) {
+  function openLb(btn: HTMLButtonElement) {
     visible = openers.filter((b) => !b.closest('.gallery-item')?.classList.contains('hidden'));
     index = Math.max(0, visible.indexOf(btn));
     render();
-    lightbox?.classList.remove('hidden');
-    lightbox?.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-  }
-  function close() {
-    lightbox?.classList.add('hidden');
-    lightbox?.classList.remove('flex');
-    document.body.style.overflow = '';
+    modal?.open(btn);
   }
   const step = (dir: number) => {
     if (!visible.length) return;
@@ -152,16 +164,16 @@ const prepared = items.map((item) => ({ ...item, meta: getImage(item.file) }));
     render();
   };
 
-  openers.forEach((btn) => btn.addEventListener('click', () => open(btn)));
-  document.getElementById('lb-close')?.addEventListener('click', close);
+  openers.forEach((btn) => btn.addEventListener('click', () => openLb(btn)));
+  document.getElementById('lb-close')?.addEventListener('click', () => modal?.close());
   document.getElementById('lb-prev')?.addEventListener('click', () => step(-1));
   document.getElementById('lb-next')?.addEventListener('click', () => step(1));
-  lightbox?.addEventListener('click', (e) => {
-    if (e.target === lightbox) close();
+  lightboxEl?.addEventListener('click', (e) => {
+    if (e.target === lightboxEl) modal?.close();
   });
   document.addEventListener('keydown', (e) => {
-    if (lightbox?.classList.contains('hidden')) return;
-    if (e.key === 'Escape') close();
+    if (!modal?.isOpen()) return;
+    if (e.key === 'Escape') modal.close();
     if (e.key === 'ArrowLeft') step(-1);
     if (e.key === 'ArrowRight') step(1);
   });

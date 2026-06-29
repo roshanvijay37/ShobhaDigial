@@ -28,8 +28,12 @@ export const site = {
     postalCode: '574227', // TODO: confirm Belvai PIN code
     country: 'India',
   },
-  // Approximate Belvai coordinates for map/SEO — TODO: refine to the exact studio pin.
+  // Approximate Belvai coordinates. Until verified, geoConfirmed stays false and
+  // the coordinates are NOT published in structured data (so Google isn't given a
+  // misplaced pin). Set the exact studio location and flip geoConfirmed to true.
   geo: { lat: 13.0776, lng: 74.9931 },
+  geoConfirmed: false,
+  priceRange: '$$',
   hours: 'Mon – Sun · 9:00 AM – 8:00 PM',
   mapQuery: 'Belvai, Moodbidri, Karnataka',
 

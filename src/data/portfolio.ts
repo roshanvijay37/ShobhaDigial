@@ -94,7 +94,8 @@ export const films: Film[] = [
     description: 'A night of Yakshagana, captured with the rhythm of the chande.',
   },
   {
-    title: 'Shashank · Wedding Film',
+    // TODO: a named couple's film can use their names once they consent.
+    title: 'A Coastal Wedding',
     category: 'Wedding Film',
     youtubeId: '', // TODO: paste YouTube id after upload
     description: 'A coastal Karnataka wedding, told as a cinematic short.',

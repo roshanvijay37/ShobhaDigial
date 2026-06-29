@@ -19,7 +19,7 @@ const process = [
   title="Services"
   description="Wedding & pre-wedding photography and films, kids & newborn, temple and Yakshagana coverage, portraits, events, album design and printing — Shobha Digital Studio, Belvai."
 >
-  <section class="bg-maroon py-16 text-center sm:py-20">
+  <section class="bg-maroon-dark py-16 text-center sm:py-20">
     <div class="shell">
       <p class="font-kannada text-base text-gold-light">ನಮ್ಮ ಸೇವೆಗಳು</p>
       <h1 class="mt-3 font-serif text-5xl font-semibold text-cream sm:text-6xl">Services</h1>
@@ -51,7 +51,7 @@ const process = [
         {process.map((p, i) => (
           <Reveal delay={i * 80}>
             <div class="h-full rounded-xl border border-maroon/10 bg-white/50 p-7">
-              <div class="font-serif text-5xl text-gold">{p.step}</div>
+              <div class="font-serif text-5xl text-maroon">{p.step}</div>
               <h3 class="mt-3 font-serif text-2xl text-ink">{p.title}</h3>
               <p class="mt-2 text-sm leading-relaxed text-muted">{p.text}</p>
             </div>

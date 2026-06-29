@@ -20,7 +20,7 @@ function isActive(path: string) {
   return current === target || current.startsWith(target + '/');
 }
 ---
-<header class="sticky top-0 z-40 border-b border-gold/25 bg-maroon/95 backdrop-blur supports-[backdrop-filter]:bg-maroon/90">
+<header class="sticky top-0 z-40 border-b border-gold/25 bg-maroon/95 shadow-lg shadow-maroon-dark/20 backdrop-blur supports-[backdrop-filter]:bg-maroon/90">
   <div class="shell flex h-16 items-center justify-between gap-4">
     <a href={href('/')} class="shrink-0" aria-label="Shobha Digital Studio — home">
       <Logo tone="light" />
@@ -46,7 +46,7 @@ function isActive(path: string) {
 
     <button
       id="menu-open"
-      class="text-cream lg:hidden"
+      class="-mr-2 inline-flex h-11 w-11 items-center justify-center text-cream lg:hidden"
       aria-label="Open menu"
       aria-controls="mobile-menu"
       aria-expanded="false"
@@ -55,10 +55,17 @@ function isActive(path: string) {
     </button>
   </div>
 
-  <div id="mobile-menu" class="fixed inset-0 z-50 hidden bg-maroon-dark/98 backdrop-blur lg:hidden">
+  <div
+    id="mobile-menu"
+    tabindex="-1"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menu"
+    class="fixed inset-0 z-50 hidden bg-maroon-dark/98 backdrop-blur lg:hidden"
+  >
     <div class="flex h-16 items-center justify-between px-5 sm:px-8">
       <Logo tone="light" />
-      <button id="menu-close" class="text-cream" aria-label="Close menu">
+      <button id="menu-close" class="-mr-2 inline-flex h-11 w-11 items-center justify-center text-cream" aria-label="Close menu">
         <Icon name="close" size={26} />
       </button>
     </div>
@@ -76,19 +83,21 @@ function isActive(path: string) {
 </header>
 
 <script>
+  import { createModal } from '../lib/modal';
+
   const openBtn = document.getElementById('menu-open');
-  const closeBtn = document.getElementById('menu-close');
   const menu = document.getElementById('mobile-menu');
-  const setOpen = (show: boolean) => {
-    if (!menu) return;
-    menu.classList.toggle('hidden', !show);
-    openBtn?.setAttribute('aria-expanded', String(show));
-    document.body.style.overflow = show ? 'hidden' : '';
-  };
-  openBtn?.addEventListener('click', () => setOpen(true));
-  closeBtn?.addEventListener('click', () => setOpen(false));
-  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  const modal = menu
+    ? createModal(menu, {
+        onOpen: () => openBtn?.setAttribute('aria-expanded', 'true'),
+        onClose: () => openBtn?.setAttribute('aria-expanded', 'false'),
+      })
+    : null;
+
+  openBtn?.addEventListener('click', () => modal?.open(openBtn));
+  document.getElementById('menu-close')?.addEventListener('click', () => modal?.close());
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => modal?.close()));
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setOpen(false);
+    if (e.key === 'Escape' && modal?.isOpen()) modal.close();
   });
 </script>

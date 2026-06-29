@@ -18,10 +18,13 @@ import { testimonials } from '../data/testimonials';
 
 const featured = portfolio.filter((p) => p.featured);
 const aboutImg = getImage('temple-festival-deity-crown.jpeg');
+// Non-quantitative highlights — no unverified numbers. TODO: once Devanand
+// confirms real figures (years in business, events covered), they can replace
+// these with concrete stats.
 const stats = [
-  { value: '25+', label: 'Years behind the lens' },
-  { value: '1000+', label: 'Events & weddings' },
   { value: 'Belvai', label: 'Rooted in our community' },
+  { value: 'Photo & Film', label: 'Captured under one roof' },
+  { value: 'Every Tradition', label: 'Temple, wedding & beyond' },
 ];
 ---
 <BaseLayout>
@@ -111,17 +114,19 @@ const stats = [
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section class="bg-cream py-20 sm:py-28">
-    <div class="shell">
-      <Reveal><SectionHeading eyebrow="Kind words" title="What our clients say" /></Reveal>
-      <div class="mt-14 grid gap-6 md:grid-cols-3">
-        {testimonials.map((item, i) => (
-          <Reveal delay={i * 100}><Testimonial item={item} /></Reveal>
-        ))}
+  <!-- Testimonials (only renders when real, consented quotes exist) -->
+  {testimonials.length > 0 && (
+    <section class="bg-cream py-20 sm:py-28">
+      <div class="shell">
+        <Reveal><SectionHeading eyebrow="Kind words" title="What our clients say" /></Reveal>
+        <div class="mt-14 grid gap-6 md:grid-cols-3">
+          {testimonials.map((item, i) => (
+            <Reveal delay={i * 100}><Testimonial item={item} /></Reveal>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <!-- CTA -->
   <section class="bg-maroon py-20">

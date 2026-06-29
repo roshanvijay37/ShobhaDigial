@@ -1,27 +1,12 @@
-// TODO: Replace these placeholders with real client testimonials (with consent).
+// Real, consented client testimonials only. Until Devanand provides genuine
+// quotes (with permission to publish names), keep this array EMPTY — the
+// homepage testimonials section hides itself when there are none, so no
+// fabricated reviews ever ship. Add entries like:
+//   { quote: '…', name: 'Real Name', context: 'Wedding · Place' }
 export interface Testimonial {
   quote: string;
   name: string;
   context: string;
 }
 
-export const testimonials: Testimonial[] = [
-  {
-    quote:
-      'They captured our wedding exactly the way it felt — every ritual, every emotion. The album is a treasure for our family.',
-    name: 'Prajna & Karthik',
-    context: 'Wedding · Moodbidri',
-  },
-  {
-    quote:
-      'For our temple Brahmakalasha they were respectful, unobtrusive and wonderfully thorough. The photos are stunning.',
-    name: 'Temple Committee',
-    context: 'Brahmakalasha · Belvai',
-  },
-  {
-    quote:
-      'Our daughter would not sit still, but they were so patient. We got the most beautiful set of portraits.',
-    name: 'Sahana Shetty',
-    context: 'Kids shoot · Karkala',
-  },
-];
+export const testimonials: Testimonial[] = [];
