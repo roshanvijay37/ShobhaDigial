@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Gallery from '../Gallery.astro';
+import FilmGrid from '../FilmGrid.astro';
+import Reveal from '../Reveal.astro';
+import { portfolio, films, categories } from '../../data/portfolio';
+import { useTranslations, asLang } from '../../i18n/utils';
+
+const t = useTranslations(asLang(Astro.currentLocale));
+---
+<BaseLayout
+  title="Portfolio"
+  description="A gallery of weddings, temple festivals, Yakshagana, kids and portrait photography by Shobha Digital Studio, Belvai."
+>
+  <section class="bg-maroon-dark py-16 text-center sm:py-20">
+    <div class="shell">
+      <p class="font-kannada text-base text-gold-light">ಚಿತ್ರ ಸಂಗ್ರಹ</p>
+      <h1 class="mt-3 font-serif text-5xl font-semibold text-cream sm:text-6xl">{t('port.title')}</h1>
+      <div class="divider mx-auto mt-5 max-w-xs text-gold" aria-hidden="true">◆</div>
+      <p class="mx-auto mt-5 max-w-2xl text-cream/80">{t('port.sub')}</p>
+    </div>
+  </section>
+
+  <section class="bg-cream py-16 sm:py-24">
+    <div class="shell">
+      <Gallery items={portfolio} filters={categories} />
+    </div>
+  </section>
+
+  <section class="bg-maroon-dark py-16 sm:py-24">
+    <div class="shell">
+      <Reveal><SectionHeading eyebrow={t('films.eyebrow')} title={t('films.title')} tone="light" /></Reveal>
+      <Reveal class="mt-12 block"><FilmGrid films={films} /></Reveal>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Reveal from '../Reveal.astro';
+import Icon from '../Icon.astro';
+import { whatsappUrl } from '../../data/site';
+import { getImage } from '../../lib/images';
+import { useTranslations, asLang, navHref } from '../../i18n/utils';
+
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const portrait = getImage('temple-festival-silver-deity.jpeg');
+const second = getImage('kids-traditional-2.jpeg');
+
+const values = [
+  { icon: 'heart', title: t('about.v1.title'), text: t('about.v1.text') },
+  { icon: 'camera', title: t('about.v2.title'), text: t('about.v2.text') },
+  { icon: 'sparkles', title: t('about.v3.title'), text: t('about.v3.text') },
+  { icon: 'users', title: t('about.v4.title'), text: t('about.v4.text') },
+];
+---
+<BaseLayout
+  title="About"
+  description="Shobha Digital Studio is a photography and cinematography studio in Belvai, led by Devanand Bhat — rooted in the culture and traditions of coastal Karnataka."
+>
+  <section class="bg-maroon-dark py-16 text-center sm:py-20">
+    <div class="shell">
+      <p class="font-kannada text-base text-gold-light">ನಮ್ಮ ಕಥೆ</p>
+      <h1 class="mt-3 font-serif text-5xl font-semibold text-cream sm:text-6xl">{t('about.h1')}</h1>
+      <div class="divider mx-auto mt-5 max-w-xs text-gold" aria-hidden="true">◆</div>
+    </div>
+  </section>
+
+  <section class="bg-cream py-16 sm:py-24">
+    <div class="shell grid items-center gap-12 lg:grid-cols-2">
+      <Reveal>
+        <span class="eyebrow text-maroon">{t('about.fromBelvai')}</span>
+        <h2 class="mt-4 font-serif text-4xl text-ink sm:text-5xl">{t('about.rootedTitle')}</h2>
+        <span class="mt-5 block h-px w-16 bg-gold"></span>
+        <p class="mt-6 text-lg leading-relaxed text-ink/80">{t('about.story1')}</p>
+        <p class="mt-4 leading-relaxed text-muted">{t('about.story2')}</p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href={navHref('/portfolio', lang)} class="btn btn-primary">{t('about.seeWork')} <Icon name="arrow-right" size={16} /></a>
+          <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-outline">
+            <Icon name="whatsapp" size={16} /> {t('cta.sayHello')}
+          </a>
+        </div>
+      </Reveal>
+      <Reveal delay={120}>
+        <div class="grid grid-cols-2 gap-4">
+          <div data-tilt="6" class="overflow-hidden rounded-2xl">
+            <Image src={portrait} widths={[300, 600]} sizes="40vw" alt="A deity-bearer at a night temple festival, photographed by Shobha Digital Studio" class="h-full w-full object-cover" />
+          </div>
+          <div data-tilt="6" class="mt-8 overflow-hidden rounded-2xl">
+            <Image src={second} widths={[300, 600]} sizes="40vw" alt="A child in traditional dress on a village path" class="h-full w-full object-cover" />
+          </div>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <section class="bg-cream-2 py-16 sm:py-24">
+    <div class="shell">
+      <Reveal><SectionHeading eyebrow={t('about.valuesEyebrow')} title={t('about.valuesTitle')} /></Reveal>
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {values.map((v, i) => (
+          <Reveal delay={(i % 4) * 80}>
+            <div data-tilt="5" class="h-full rounded-xl border border-maroon/10 bg-white/50 p-7">
+              <div class="grid h-12 w-12 place-items-center rounded-full bg-maroon text-gold">
+                <Icon name={v.icon} size={22} />
+              </div>
+              <h3 class="mt-5 font-serif text-xl text-ink">{v.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{v.text}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-maroon py-16">
+    <div class="shell text-center">
+      <Reveal>
+        <h2 class="mx-auto max-w-2xl font-serif text-4xl text-cream sm:text-5xl">{t('about.ctaTitle')}</h2>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-gold">
+            <Icon name="whatsapp" size={16} /> {t('cta.enquireWhatsApp')}
+          </a>
+          <a href={navHref('/contact', lang)} class="btn btn-ghost-light">{t('cta.contactUs')}</a>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+</BaseLayout>

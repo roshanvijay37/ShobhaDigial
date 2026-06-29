@@ -1,7 +1,9 @@
 ---
 import Icon from './Icon.astro';
 import { site, whatsappUrl } from '../data/site';
+import { useTranslations, asLang } from '../i18n/utils';
 
+const t = useTranslations(asLang(Astro.currentLocale));
 const configured = Boolean(site.web3formsKey);
 const fieldClass =
   'w-full rounded-lg border border-maroon/15 bg-cream px-4 py-3 text-sm text-ink placeholder:text-muted/60 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30';
@@ -15,18 +17,18 @@ const fieldClass =
 
   <div class="grid gap-4 sm:grid-cols-2">
     <div>
-      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="name">Name <span aria-hidden="true">*</span></label>
-      <input id="name" name="name" type="text" required aria-required="true" placeholder="Your name" class={fieldClass} />
+      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="name">{t('form.name')} <span aria-hidden="true">*</span></label>
+      <input id="name" name="name" type="text" required aria-required="true" placeholder={t('form.namePh')} class={fieldClass} />
     </div>
     <div>
-      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="phone">Phone / WhatsApp <span aria-hidden="true">*</span></label>
+      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="phone">{t('form.phone')} <span aria-hidden="true">*</span></label>
       <input id="phone" name="phone" type="tel" required aria-required="true" placeholder="+91 " class={fieldClass} />
     </div>
   </div>
 
   <div class="grid gap-4 sm:grid-cols-2">
     <div>
-      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="event">Occasion</label>
+      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="event">{t('form.occasion')}</label>
       <select id="event" name="occasion" class={fieldClass}>
         <option>Wedding</option>
         <option>Pre-Wedding</option>
@@ -39,32 +41,30 @@ const fieldClass =
       </select>
     </div>
     <div>
-      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="date">Tentative date</label>
+      <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="date">{t('form.date')}</label>
       <input id="date" name="date" type="date" class={fieldClass} />
     </div>
   </div>
 
   <div>
-    <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="message">Message</label>
-    <textarea id="message" name="message" rows="4" placeholder="Tell us a little about your event…" class={fieldClass}></textarea>
+    <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="message">{t('form.message')}</label>
+    <textarea id="message" name="message" rows="4" placeholder={t('form.messagePh')} class={fieldClass}></textarea>
   </div>
 
   {!configured && (
     <p class="rounded-lg border border-gold/40 bg-gold/10 px-4 py-3 text-xs text-maroon">
-      Note: the online form isn't connected yet. Add a free Web3Forms key in
-      <code class="font-mono">src/data/site.ts</code> to start receiving enquiries by email. Meanwhile, the
-      WhatsApp button works.
+      {t('form.note')}
     </p>
   )}
 
-  <p class="text-xs text-muted">Fields marked <span aria-hidden="true">*</span> are required.</p>
+  <p class="text-xs text-muted">{t('form.required')}</p>
 
   <div class="flex flex-wrap items-center gap-3">
     <button type="submit" class="btn btn-primary" disabled={!configured}>
-      <Icon name="mail" size={16} /> Send enquiry
+      <Icon name="mail" size={16} /> {t('form.send')}
     </button>
     <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-outline">
-      <Icon name="whatsapp" size={16} /> Or message on WhatsApp
+      <Icon name="whatsapp" size={16} /> {t('form.orWhatsApp')}
     </a>
   </div>
 

@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../SectionHeading.astro';
+import ServiceCard from '../ServiceCard.astro';
+import Reveal from '../Reveal.astro';
+import Icon from '../Icon.astro';
+import { whatsappUrl } from '../../data/site';
+import { services } from '../../data/services';
+import { useTranslations, asLang, navHref } from '../../i18n/utils';
+
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const process = [
+  { step: '01', title: t('svc.step1.title'), text: t('svc.step1.text') },
+  { step: '02', title: t('svc.step2.title'), text: t('svc.step2.text') },
+  { step: '03', title: t('svc.step3.title'), text: t('svc.step3.text') },
+  { step: '04', title: t('svc.step4.title'), text: t('svc.step4.text') },
+];
+---
+<BaseLayout
+  title="Services"
+  description="Wedding & pre-wedding photography and films, kids & newborn, temple and Yakshagana coverage, portraits, events, album design and printing — Shobha Digital Studio, Belvai."
+>
+  <section class="bg-maroon-dark py-16 text-center sm:py-20">
+    <div class="shell">
+      <p class="font-kannada text-base text-gold-light">ನಮ್ಮ ಸೇವೆಗಳು</p>
+      <h1 class="mt-3 font-serif text-5xl font-semibold text-cream sm:text-6xl">{t('svc.title')}</h1>
+      <div class="divider mx-auto mt-5 max-w-xs text-gold" aria-hidden="true">◆</div>
+      <p class="mx-auto mt-5 max-w-2xl text-cream/80">{t('svc.sub')}</p>
+    </div>
+  </section>
+
+  <section class="bg-cream py-16 sm:py-24">
+    <div class="shell">
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {services.map((service, i) => (
+          <Reveal delay={(i % 4) * 80}><ServiceCard service={service} /></Reveal>
+        ))}
+      </div>
+      <p class="mx-auto mt-12 max-w-2xl text-center text-muted">{t('svc.note')}</p>
+    </div>
+  </section>
+
+  <section class="bg-cream-2 py-16 sm:py-24">
+    <div class="shell">
+      <Reveal><SectionHeading eyebrow={t('svc.processEyebrow')} title={t('svc.processTitle')} /></Reveal>
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {process.map((p, i) => (
+          <Reveal delay={i * 80}>
+            <div data-tilt="5" class="h-full rounded-xl border border-maroon/10 bg-white/50 p-7">
+              <div class="font-serif text-5xl text-maroon">{p.step}</div>
+              <h3 class="mt-3 font-serif text-2xl text-ink">{p.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{p.text}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-maroon py-16">
+    <div class="shell text-center">
+      <Reveal>
+        <h2 class="mx-auto max-w-2xl font-serif text-4xl text-cream sm:text-5xl">{t('svc.ctaTitle')}</h2>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-gold">
+            <Icon name="whatsapp" size={16} /> {t('svc.ctaWhatsApp')}
+          </a>
+          <a href={navHref('/contact', lang)} class="btn btn-ghost-light">{t('cta.contactUs')}</a>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+</BaseLayout>

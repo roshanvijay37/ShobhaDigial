@@ -3,8 +3,14 @@ import { href } from '../lib/url';
 
 const BASE = import.meta.env.BASE_URL.replace(/\/+$/, ''); // '' or '/ShobhaDigial'
 
-// Routes that have a Kannada (/kn/...) version. Extend as pages are translated.
-export const TRANSLATED_ROUTES = new Set<string>(['/']);
+// Routes that have a Kannada (/kn/...) version.
+export const TRANSLATED_ROUTES = new Set<string>([
+  '/',
+  '/portfolio',
+  '/services',
+  '/about',
+  '/contact',
+]);
 export function isTranslated(route: string): boolean {
   return TRANSLATED_ROUTES.has(route);
 }
