@@ -8,19 +8,29 @@ import { initGallery } from './gallery';
 import { initFilmGrid } from './filmgrid';
 import { initMenu } from './header-menu';
 import { initContactForm } from './contact-form';
+import { getLenis } from './motion/lenis';
+import { initTilt } from './motion/tilt';
+import { initParallax } from './motion/parallax';
+import { initMagnetic } from './motion/magnetic';
 
 let pageController: AbortController | null = null;
+let hasInit = false;
 
 function initPage() {
+  hasInit = true;
   pageController?.abort();
   pageController = new AbortController();
   const { signal } = pageController;
 
+  getLenis(); // start smooth scroll once (singleton; no-op under reduced motion)
   initReveal(signal);
   initGallery(signal);
   initFilmGrid(signal);
   initMenu(signal);
   initContactForm(signal);
+  initTilt(signal);
+  initParallax(signal);
+  initMagnetic(signal);
 }
 
 // Tear down the previous page's listeners just before the DOM is swapped.
@@ -29,3 +39,12 @@ document.addEventListener('astro:before-swap', () => pageController?.abort());
 document.addEventListener('astro:after-swap', initPage);
 // First (full) page load — fires once; subsequent navs use after-swap above.
 document.addEventListener('astro:page-load', initPage, { once: true });
+// Safety net: if astro:page-load never fires on first load (so .reveal content
+// would stay hidden), initialise anyway. Guarded so it can't double-bind.
+window.addEventListener(
+  'load',
+  () => {
+    if (!hasInit) initPage();
+  },
+  { once: true },
+);

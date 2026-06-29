@@ -57,10 +57,10 @@ const values = [
       </Reveal>
       <Reveal delay={120}>
         <div class="grid grid-cols-2 gap-4">
-          <div class="overflow-hidden rounded-2xl">
+          <div data-tilt="6" class="overflow-hidden rounded-2xl">
             <Image src={portrait} widths={[300, 600]} sizes="40vw" alt="A deity-bearer at a night temple festival, photographed by Shobha Digital Studio" class="h-full w-full object-cover" />
           </div>
-          <div class="mt-8 overflow-hidden rounded-2xl">
+          <div data-tilt="6" class="mt-8 overflow-hidden rounded-2xl">
             <Image src={second} widths={[300, 600]} sizes="40vw" alt="A child in traditional dress on a village path" class="h-full w-full object-cover" />
           </div>
         </div>
@@ -74,7 +74,7 @@ const values = [
       <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {values.map((v, i) => (
           <Reveal delay={(i % 4) * 80}>
-            <div class="h-full rounded-xl border border-maroon/10 bg-white/50 p-7">
+            <div data-tilt="5" class="h-full rounded-xl border border-maroon/10 bg-white/50 p-7">
               <div class="grid h-12 w-12 place-items-center rounded-full bg-maroon text-gold">
                 <Icon name={v.icon} size={22} />
               </div>

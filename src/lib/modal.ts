@@ -2,6 +2,8 @@
 // mobile menu. Handles: hoisting the overlay out of <main> so the rest of the
 // page can be inert-ed, focus trapping, focus restore, body scroll lock, and
 // aria-hidden/inert on the background. No dependencies.
+import { lockScroll, unlockScroll } from '../scripts/motion/lenis';
+
 type Hooks = { onOpen?: () => void; onClose?: () => void };
 
 const FOCUSABLE =
@@ -43,7 +45,7 @@ export function createModal(el: HTMLElement, hooks: Hooks = {}) {
     lastFocused = trigger ?? (document.activeElement as HTMLElement | null);
     el.classList.remove('hidden');
     el.classList.add('flex');
-    document.body.style.overflow = 'hidden';
+    lockScroll(); // pause Lenis + lock body scroll
     inerted = Array.from(document.body.children).filter(
       (c) => c !== el && c.tagName !== 'SCRIPT',
     );
@@ -59,7 +61,7 @@ export function createModal(el: HTMLElement, hooks: Hooks = {}) {
   function close() {
     el.classList.add('hidden');
     el.classList.remove('flex');
-    document.body.style.overflow = '';
+    unlockScroll();
     inerted.forEach((c) => {
       c.removeAttribute('inert');
       c.removeAttribute('aria-hidden');

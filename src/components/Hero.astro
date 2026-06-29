@@ -8,20 +8,24 @@ import { getImage } from '../lib/images';
 const hero = getImage('temple-river-procession.jpeg');
 ---
 <section class="relative isolate flex min-h-[88vh] items-center overflow-hidden">
-  <Image
-    src={hero}
-    widths={[768, 1280, 1920, 2400, 2736]}
-    sizes="100vw"
-    alt=""
-    loading="eager"
-    fetchpriority="high"
-    class="absolute inset-0 -z-20 h-full w-full object-cover"
-  />
+  <div class="absolute inset-0 -z-20 overflow-hidden">
+    <div data-parallax="0.15" class="absolute inset-x-0 -top-[15%] h-[130%]">
+      <Image
+        src={hero}
+        widths={[768, 1280, 1920, 2400, 2736]}
+        sizes="100vw"
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+        class="hero-kenburns h-full w-full object-cover"
+      />
+    </div>
+  </div>
   <div class="absolute inset-0 -z-10 bg-gradient-to-b from-maroon-dark/75 via-maroon-dark/55 to-maroon-dark/85"></div>
 
   <div class="shell py-24 text-center">
     <p class="font-kannada text-lg text-gold-light sm:text-xl">{site.taglineKannada}</p>
-    <h1 class="mx-auto mt-5 max-w-4xl font-serif text-5xl font-semibold text-cream sm:text-7xl">
+    <h1 class="sheen mx-auto mt-5 max-w-4xl font-serif text-5xl font-semibold text-cream sm:text-7xl">
       Shobha Digital Studio
     </h1>
     <div class="divider mx-auto mt-6 max-w-xs text-gold" aria-hidden="true">◆</div>
@@ -30,10 +34,10 @@ const hero = getImage('temple-river-procession.jpeg');
       cinematography from the heart of Belvai, for all of Dakshina Kannada.
     </p>
     <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
-      <a href={href('/portfolio')} class="btn btn-gold">
+      <a href={href('/portfolio')} data-magnetic="0.4" class="btn btn-gold">
         View Portfolio <Icon name="arrow-right" size={16} />
       </a>
-      <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn btn-ghost-light">
+      <a href={whatsappUrl()} target="_blank" rel="noopener" data-magnetic="0.4" class="btn btn-ghost-light">
         <Icon name="whatsapp" size={16} /> Enquire on WhatsApp
       </a>
     </div>

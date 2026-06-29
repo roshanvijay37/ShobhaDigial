@@ -18,7 +18,7 @@ const prepared = films.map((f) => ({
     const live = Boolean(film.youtubeId);
     const Tag = live ? 'button' : 'div';
     return (
-      <article class="group overflow-hidden rounded-xl border border-cream/10 bg-maroon-dark/40">
+      <article data-tilt="4" class="group overflow-hidden rounded-xl border border-cream/10 bg-maroon-dark/40">
         <Tag
           class:list={['film-open relative block aspect-video w-full overflow-hidden', live && 'cursor-pointer']}
           type={live ? 'button' : undefined}
