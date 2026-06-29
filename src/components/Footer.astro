@@ -3,6 +3,7 @@ import Icon from './Icon.astro';
 import Logo from './Logo.astro';
 import { href } from '../lib/url';
 import { site, whatsappUrl, telUrl, mapsUrl } from '../data/site';
+import { areas } from '../data/areas';
 
 const year = 2026; // build-time constant (Date.now is unavailable in this env)
 const nav = [
@@ -74,6 +75,17 @@ const nav = [
           <span>{site.hours}</span>
         </li>
       </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-cream/10">
+    <div class="shell py-6">
+      <span class="text-xs font-semibold uppercase tracking-[0.25em] text-gold">Wedding photographer in</span>
+      <div class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-cream/70">
+        {areas.map((a) => (
+          <a href={href(`/wedding-photographer/${a.slug}`)} class="transition-colors hover:text-gold">{a.place}</a>
+        ))}
+      </div>
     </div>
   </div>
 
