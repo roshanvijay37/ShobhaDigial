@@ -12,6 +12,20 @@ import { getLenis } from './motion/lenis';
 import { initTilt } from './motion/tilt';
 import { initParallax } from './motion/parallax';
 import { initMagnetic } from './motion/magnetic';
+import { canUseWebGL, hasFinePointer, isLowPower, prefersReducedMotion } from '../lib/capabilities';
+
+// Lazy, capability-gated WebGL signature effect. The OGL chunk is only fetched
+// on capable pointer devices — never for bots, reduced-motion, touch, or low-end.
+async function initWebGL(signal: AbortSignal) {
+  if (prefersReducedMotion() || !hasFinePointer() || !canUseWebGL() || isLowPower()) return;
+  if (!document.querySelector('[data-webgl]')) return;
+  try {
+    const { initHoverDistortion } = await import('./motion/webgl/hoverDistortion');
+    if (!signal.aborted) initHoverDistortion(signal);
+  } catch {
+    /* WebGL enhancement is optional — ignore failures */
+  }
+}
 
 let pageController: AbortController | null = null;
 let hasInit = false;
@@ -31,6 +45,7 @@ function initPage() {
   initTilt(signal);
   initParallax(signal);
   initMagnetic(signal);
+  void initWebGL(signal);
 }
 
 // Tear down the previous page's listeners just before the DOM is swapped.
