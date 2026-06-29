@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
-/* ── Theme: Charcoal & Gold (cinematic) ──────────────────────────────────── */
-/* Token names (maroon/cream) are kept for stability; the values below define
-   the active palette. "maroon" now holds the charcoal primary. */
+/* ── Theme: Ivory & Gold (all-light) ─────────────────────────────────────── */
+/* Token names (maroon/cream) are kept for stability. Large surfaces are light;
+   "maroon" now holds a near-black used for text + dark buttons/accents, while
+   the hero photo overlay and the lightbox backdrops remain dark on purpose. */
 @theme {
-  --color-cream: #f7f4ef;       /* ivory page background */
-  --color-cream-2: #ebe6dc;
-  --color-maroon: #232220;      /* charcoal primary (headers, buttons, bands) */
-  --color-maroon-light: #38352f;
-  --color-maroon-dark: #161513; /* near-black (gradients, footer) */
-  --color-gold: #cda349;        /* refined gold accent */
-  --color-gold-light: #e6c97e;
-  --color-ink: #232220;
+  --color-cream: #fcfbf8;       /* warm white page background */
+  --color-cream-2: #f4eede;     /* soft gold-tinted light (alt sections) */
+  --color-maroon: #1a1916;      /* near-black (text, dark buttons, icon accents) */
+  --color-maroon-light: #33302a;
+  --color-maroon-dark: #100f0e; /* darkest — lightbox backdrops */
+  --color-gold: #c49a2e;        /* richer gold accent */
+  --color-gold-light: #ddc174;  /* lighter gold for use on dark (hero/lightbox) */
+  --color-ink: #1a1916;
   --color-muted: #6b6258;
 
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;

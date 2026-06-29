@@ -13,12 +13,12 @@ const t = useTranslations(asLang(Astro.currentLocale));
   title="Portfolio"
   description="A gallery of weddings, temple festivals, Yakshagana, kids and portrait photography by Shobha Digital Studio, Belvai."
 >
-  <section class="bg-maroon-dark py-16 text-center sm:py-20">
+  <section class="bg-cream-2 py-16 text-center sm:py-20">
     <div class="shell">
-      <p class="font-kannada text-base text-gold-light">ಚಿತ್ರ ಸಂಗ್ರಹ</p>
-      <h1 class="mt-3 font-serif text-5xl font-semibold text-cream sm:text-6xl">{t('port.title')}</h1>
+      <p class="font-kannada text-base text-gold">ಚಿತ್ರ ಸಂಗ್ರಹ</p>
+      <h1 class="mt-3 font-serif text-5xl font-semibold text-ink sm:text-6xl">{t('port.title')}</h1>
       <div class="divider mx-auto mt-5 max-w-xs text-gold" aria-hidden="true">◆</div>
-      <p class="mx-auto mt-5 max-w-2xl text-cream/80">{t('port.sub')}</p>
+      <p class="mx-auto mt-5 max-w-2xl text-ink/70">{t('port.sub')}</p>
     </div>
   </section>
 
@@ -28,9 +28,9 @@ const t = useTranslations(asLang(Astro.currentLocale));
     </div>
   </section>
 
-  <section class="bg-maroon-dark py-16 sm:py-24">
+  <section class="bg-cream-2 py-16 sm:py-24">
     <div class="shell">
-      <Reveal><SectionHeading eyebrow={t('films.eyebrow')} title={t('films.title')} tone="light" /></Reveal>
+      <Reveal><SectionHeading eyebrow={t('films.eyebrow')} title={t('films.title')} /></Reveal>
       <Reveal class="mt-12 block"><FilmGrid films={films} /></Reveal>
     </div>
   </section>

@@ -17,26 +17,26 @@ const nav = [
   { key: 'nav.contact' as const, path: '/contact' },
 ];
 ---
-<footer class="bg-maroon-dark text-cream/80">
+<footer class="border-t border-gold/40 bg-cream-2 text-ink/75">
   <div class="shell grid gap-12 py-16 md:grid-cols-12">
     <div class="md:col-span-5">
-      <Logo tone="light" />
-      <p class="mt-6 max-w-sm text-sm leading-relaxed text-cream/70">
+      <Logo tone="dark" />
+      <p class="mt-6 max-w-sm text-sm leading-relaxed text-muted">
         {site.intro}
       </p>
       <div class="mt-6 flex items-center gap-3">
         <a href={site.social.instagram} target="_blank" rel="noopener"
-           class="grid h-10 w-10 place-items-center rounded-full border border-cream/20 transition-colors hover:border-gold hover:text-gold"
+           class="grid h-10 w-10 place-items-center rounded-full border border-maroon/15 text-ink transition-colors hover:border-gold hover:text-gold"
            aria-label="Instagram">
           <Icon name="instagram" size={18} />
         </a>
         <a href={site.social.facebook} target="_blank" rel="noopener"
-           class="grid h-10 w-10 place-items-center rounded-full border border-cream/20 transition-colors hover:border-gold hover:text-gold"
+           class="grid h-10 w-10 place-items-center rounded-full border border-maroon/15 text-ink transition-colors hover:border-gold hover:text-gold"
            aria-label="Facebook">
           <Icon name="facebook" size={18} />
         </a>
         <a href={whatsappUrl()} target="_blank" rel="noopener"
-           class="grid h-10 w-10 place-items-center rounded-full border border-cream/20 transition-colors hover:border-gold hover:text-gold"
+           class="grid h-10 w-10 place-items-center rounded-full border border-maroon/15 text-ink transition-colors hover:border-gold hover:text-gold"
            aria-label="WhatsApp">
           <Icon name="whatsapp" size={18} />
         </a>
@@ -44,33 +44,33 @@ const nav = [
     </div>
 
     <div class="md:col-span-3">
-      <h3 class="text-xs font-semibold uppercase tracking-[0.25em] text-gold">{t('footer.explore')}</h3>
+      <h3 class="text-xs font-semibold uppercase tracking-[0.25em] text-maroon">{t('footer.explore')}</h3>
       <ul class="mt-5 space-y-3 text-sm">
         {nav.map((item) => (
           <li>
-            <a href={navHref(item.path, lang)} class="text-cream/75 transition-colors hover:text-gold">{t(item.key)}</a>
+            <a href={navHref(item.path, lang)} class="text-ink/70 transition-colors hover:text-maroon">{t(item.key)}</a>
           </li>
         ))}
       </ul>
     </div>
 
     <div class="md:col-span-4">
-      <h3 class="text-xs font-semibold uppercase tracking-[0.25em] text-gold">{t('footer.visit')}</h3>
-      <ul class="mt-5 space-y-4 text-sm text-cream/75">
+      <h3 class="text-xs font-semibold uppercase tracking-[0.25em] text-maroon">{t('footer.visit')}</h3>
+      <ul class="mt-5 space-y-4 text-sm text-ink/70">
         <li class="flex items-start gap-3">
           <Icon name="map-pin" size={18} class="mt-0.5 shrink-0 text-gold" />
-          <a href={mapsUrl()} target="_blank" rel="noopener" class="hover:text-gold">
+          <a href={mapsUrl()} target="_blank" rel="noopener" class="hover:text-maroon">
             {site.address.line1}, {site.address.line2}, {site.address.region} {site.address.postalCode}
           </a>
         </li>
         <li class="flex items-center gap-3">
           <Icon name="phone" size={18} class="shrink-0 text-gold" />
-          <a href={telUrl()} class="hover:text-gold">{site.phoneDisplay}</a>
+          <a href={telUrl()} class="hover:text-maroon">{site.phoneDisplay}</a>
         </li>
         {site.email && (
           <li class="flex items-center gap-3">
             <Icon name="mail" size={18} class="shrink-0 text-gold" />
-            <a href={`mailto:${site.email}`} class="hover:text-gold">{site.email}</a>
+            <a href={`mailto:${site.email}`} class="hover:text-maroon">{site.email}</a>
           </li>
         )}
         <li class="flex items-center gap-3">
@@ -81,19 +81,19 @@ const nav = [
     </div>
   </div>
 
-  <div class="border-t border-cream/10">
+  <div class="border-t border-maroon/10">
     <div class="shell py-6">
-      <span class="text-xs font-semibold uppercase tracking-[0.25em] text-gold">{t('footer.areas')}</span>
-      <div class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-cream/70">
+      <span class="text-xs font-semibold uppercase tracking-[0.25em] text-maroon">{t('footer.areas')}</span>
+      <div class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
         {areas.map((a) => (
-          <a href={href(`/wedding-photographer/${a.slug}`)} class="transition-colors hover:text-gold">{a.place}</a>
+          <a href={href(`/wedding-photographer/${a.slug}`)} class="transition-colors hover:text-maroon">{a.place}</a>
         ))}
       </div>
     </div>
   </div>
 
-  <div class="border-t border-cream/10">
-    <div class="shell flex flex-col items-center justify-between gap-2 py-6 pb-24 text-xs text-cream/50 sm:flex-row sm:pb-10">
+  <div class="border-t border-maroon/10">
+    <div class="shell flex flex-col items-center justify-between gap-2 py-6 pb-24 text-xs text-muted sm:flex-row sm:pb-10">
       <p>© {year} {site.name}, {site.place}. {t('footer.rights')}</p>
       <p>{t('footer.by')} {site.owner}.</p>
     </div>
