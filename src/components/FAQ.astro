@@ -1,12 +1,20 @@
 ---
 import SectionHeading from './SectionHeading.astro';
 import { faqs } from '../data/faq';
+import { useTranslations, asLang } from '../i18n/utils';
 
 // Native <details>/<summary> — accessible, zero JS, View-Transitions safe.
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const items = faqs.map((f) => ({
+  q: lang === 'kn' && f.qKn ? f.qKn : f.q,
+  a: lang === 'kn' && f.aKn ? f.aKn : f.a,
+}));
+
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({
+  mainEntity: items.map((f) => ({
     '@type': 'Question',
     name: f.q,
     acceptedAnswer: { '@type': 'Answer', text: f.a },
@@ -15,9 +23,9 @@ const faqSchema = {
 ---
 <section class="bg-cream-2 py-20 sm:py-28">
   <div class="shell max-w-3xl">
-    <SectionHeading eyebrow="Good to know" title="Frequently asked questions" />
+    <SectionHeading eyebrow={t('faq.eyebrow')} title={t('faq.title')} />
     <div class="mt-12 divide-y divide-maroon/10 overflow-hidden rounded-2xl border border-maroon/10 bg-white/50">
-      {faqs.map((f) => (
+      {items.map((f) => (
         <details class="group px-6 py-5">
           <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-serif text-lg text-ink marker:content-none [&::-webkit-details-marker]:hidden">
             <span>{f.q}</span>
