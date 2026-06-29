@@ -7,20 +7,32 @@ import { useTranslations, asLang, navHref } from '../i18n/utils';
 
 const lang = asLang(Astro.currentLocale);
 const t = useTranslations(lang);
-const hero = getImage('temple-river-procession.jpeg');
+
+// Showreel: best stills auto-crossfade (Ken-Burns). Pure CSS — see global.css
+// (.hero-slide / @keyframes heroFade). First loads eager (LCP), rest lazy.
+const slides = [
+  'temple-river-procession.jpeg',
+  'temple-festival-deity-crown.jpeg',
+  'kids-purple-field.jpeg',
+  'temple-festival-silver-deity.jpeg',
+].map((f) => getImage(f));
 ---
 <section class="relative isolate flex min-h-[88vh] items-center overflow-hidden">
   <div class="absolute inset-0 -z-20 overflow-hidden">
     <div data-parallax="0.15" class="absolute inset-x-0 -top-[15%] h-[130%]">
-      <Image
-        src={hero}
-        widths={[768, 1280, 1920, 2400, 2736]}
-        sizes="100vw"
-        alt=""
-        loading="eager"
-        fetchpriority="high"
-        class="hero-kenburns h-full w-full object-cover"
-      />
+      {slides.map((img, i) => (
+        <div class="hero-slide">
+          <Image
+            src={img}
+            widths={[768, 1280, 1920, 2400, 2736]}
+            sizes="100vw"
+            alt=""
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : undefined}
+            class="hero-kenburns h-full w-full object-cover"
+          />
+        </div>
+      ))}
     </div>
   </div>
   <div class="absolute inset-0 -z-10 bg-gradient-to-b from-maroon-dark/75 via-maroon-dark/55 to-maroon-dark/85"></div>
