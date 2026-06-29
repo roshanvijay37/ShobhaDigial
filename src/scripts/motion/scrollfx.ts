@@ -1,5 +1,5 @@
 import { getLenis } from './lenis';
-import { prefersReducedMotion } from '../../lib/capabilities';
+import { prefersReducedMotion, hasFinePointer } from '../../lib/capabilities';
 
 // ── 1. Masked word-by-word heading reveals ──────────────────────────────────
 // Splits .reveal-words text into masked word spans that slide up when scrolled
@@ -73,7 +73,7 @@ export function initProgress(signal: AbortSignal) {
 
 // ── 4. Pinned cinematic section (CSS sticky + JS scrub) ─────────────────────
 export function initPinned(signal: AbortSignal) {
-  if (prefersReducedMotion()) return;
+  if (prefersReducedMotion() || !hasFinePointer()) return; // mobile gets the static still
   const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-pinned]'));
   if (!sections.length) return;
   let raf = 0;
@@ -144,7 +144,7 @@ export function initReel(signal: AbortSignal) {
 
 // ── 3. Scroll-velocity skew ────────────────────────────────────────────────
 export function initSkew(signal: AbortSignal) {
-  if (prefersReducedMotion()) return;
+  if (prefersReducedMotion() || !hasFinePointer()) return; // never on touch (caused jitter/overflow)
   const lenis = getLenis();
   if (!lenis) return; // needs Lenis velocity
   const els = Array.from(document.querySelectorAll<HTMLElement>('[data-skew]'));

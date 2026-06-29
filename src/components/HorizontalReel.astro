@@ -20,7 +20,7 @@ const prepared = items.map((p) => ({ ...p, meta: getImage(p.file) }));
         sizes="(min-width:640px) 46vw, 82vw"
         alt={p.alt}
         loading="lazy"
-        class="h-[56vh] w-auto max-w-none object-cover"
+        class="h-[42vh] w-auto max-w-[82vw] object-cover sm:h-[56vh]"
       />
       <figcaption class="sr-only">{p.title}</figcaption>
     </figure>

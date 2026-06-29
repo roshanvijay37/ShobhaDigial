@@ -35,7 +35,7 @@ export function initIntro() {
   };
 
   requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('intro-show')));
-  const timer = setTimeout(lift, 750);
+  const timer = setTimeout(lift, 550);
   el.addEventListener('transitionend', (e) => {
     if (e.propertyName === 'transform') done();
   });

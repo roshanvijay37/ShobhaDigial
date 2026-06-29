@@ -1,11 +1,12 @@
 import { getLenis } from './lenis';
-import { prefersReducedMotion } from '../../lib/capabilities';
+import { prefersReducedMotion, hasFinePointer } from '../../lib/capabilities';
 
 // Scroll-driven depth parallax for [data-parallax] elements. Speed is the
 // fraction of the element's distance-from-viewport-center to translate.
-// Sources scroll from Lenis when active, native scroll otherwise.
+// Desktop-only: on phones the per-frame transform of full-bleed layers isn't
+// worth the jank, and the layouts read fine static.
 export function initParallax(signal: AbortSignal) {
-  if (prefersReducedMotion()) return;
+  if (prefersReducedMotion() || !hasFinePointer()) return;
   const els = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
   if (!els.length) return;
 

@@ -26,13 +26,13 @@ const prepared = await Promise.all(
 );
 ---
 {filters && filters.length > 1 && (
-  <div class="mb-10 flex flex-wrap items-center justify-center gap-2" role="group" aria-label="Filter gallery">
+  <div class="mb-10 flex flex-wrap items-center justify-center gap-2.5" role="group" aria-label="Filter gallery">
     {filters.map((cat, i) => (
       <button
         type="button"
         data-filter={cat}
         class:list={[
-          'gallery-filter inline-flex min-h-[40px] items-center rounded-full border px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] transition-colors',
+          'gallery-filter inline-flex min-h-[44px] items-center rounded-full border px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] transition-colors',
           i === 0
             ? 'border-maroon bg-maroon text-cream'
             : 'border-maroon/25 text-maroon hover:border-maroon hover:bg-maroon/5',

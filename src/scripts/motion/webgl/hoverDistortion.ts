@@ -150,8 +150,8 @@ export function initHoverDistortion(signal: AbortSignal) {
   }
 
   targets.forEach((el) => {
-    el.addEventListener('pointerenter', () => onEnter(el), { signal });
-    el.addEventListener('pointerleave', onLeave, { signal });
+    el.addEventListener('pointerenter', (e) => { if ((e as PointerEvent).pointerType === 'mouse') onEnter(el); }, { signal });
+    el.addEventListener('pointerleave', (e) => { if ((e as PointerEvent).pointerType === 'mouse') onLeave(); }, { signal });
     el.addEventListener('pointermove', (e) => onMove(el, e as PointerEvent), { signal });
   });
 

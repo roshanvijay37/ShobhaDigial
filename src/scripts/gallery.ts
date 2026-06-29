@@ -92,6 +92,27 @@ export function initGallery(signal: AbortSignal) {
     { signal },
   );
 
+  // Swipe to navigate on touch.
+  let tx = 0;
+  let ty = 0;
+  lightboxEl.addEventListener(
+    'touchstart',
+    (e) => {
+      tx = e.changedTouches[0].clientX;
+      ty = e.changedTouches[0].clientY;
+    },
+    { signal, passive: true },
+  );
+  lightboxEl.addEventListener(
+    'touchend',
+    (e) => {
+      const dx = e.changedTouches[0].clientX - tx;
+      const dy = e.changedTouches[0].clientY - ty;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
+    },
+    { signal },
+  );
+
   // Ensure body scroll / inert is released if we navigate away while open.
   signal.addEventListener('abort', () => {
     if (modal.isOpen()) modal.close();

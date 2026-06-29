@@ -24,6 +24,13 @@
   html {
     scroll-behavior: smooth;
   }
+  /* Backstop against any stray transform/100vw horizontal overflow on mobile.
+     `clip` (not `hidden`) so it doesn't create a scroll container that would
+     break the sticky header / pinned section. */
+  html,
+  body {
+    overflow-x: clip;
+  }
   body {
     background-color: var(--color-cream);
     color: var(--color-ink);
@@ -344,6 +351,31 @@ html.intro-active {
 #intro.intro-show .intro-mark {
   opacity: 1;
   transform: none;
+}
+
+/* Stop scroll-chaining / rubber-band behind open overlays. */
+#lightbox,
+#film-lightbox,
+#mobile-menu {
+  overscroll-behavior: contain;
+}
+
+/* Mobile (coarse pointer / no hover): a single static hero still — no looping
+   crossfade or Ken-Burns, and the other slides aren't downloaded. */
+@media (hover: none), (pointer: coarse) {
+  .hero-slide {
+    animation: none;
+    opacity: 0;
+  }
+  .hero-slide:first-child {
+    opacity: 1;
+  }
+  .hero-slide:not(:first-child) {
+    display: none;
+  }
+  .hero-kenburns {
+    animation: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
