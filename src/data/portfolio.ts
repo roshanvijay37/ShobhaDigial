@@ -87,11 +87,11 @@ export interface Film {
 
 export const films: Film[] = [
   {
-    title: 'Madana Mana Mohini',
+    title: 'Yaksha Sambhrama — Live',
     category: 'Yakshagana Film',
-    youtubeId: '', // TODO: paste YouTube id after upload
+    youtubeId: 'kQen6hNw0oQ',
     posterFile: 'temple-festival-deity-crown.jpeg',
-    description: 'A night of Yakshagana, captured with the rhythm of the chande.',
+    description: 'A live Yakshagana evening by Shri Yakshadeva Mitra Kala Mandali, Belvai.',
   },
   {
     // TODO: a named couple's film can use their names once they consent.
