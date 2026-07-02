@@ -17,7 +17,11 @@ export function getStaticPaths() {
 
 const { area } = Astro.props;
 const others = areas.filter((a) => a.slug !== area.slug);
-const featured = portfolio.filter((p) => p.featured).slice(0, 4);
+// Wedding-first mini gallery: lead with wedding shots, then other featured work.
+const featured = [
+  ...portfolio.filter((p) => p.category === 'Weddings'),
+  ...portfolio.filter((p) => p.featured && p.category !== 'Weddings'),
+].slice(0, 4);
 const title = `Wedding Photographer in ${area.place}`;
 const description = `Shobha Digital Studio — wedding, pre-wedding, kids, temple & Yakshagana photography and cinematography serving ${area.place} and all of Dakshina Kannada, from Belvai.`;
 
