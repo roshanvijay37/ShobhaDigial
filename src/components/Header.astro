@@ -53,15 +53,26 @@ function isActive(path: string) {
       </a>
     </div>
 
-    <button
-      id="menu-open"
-      class="-mr-2 inline-flex h-11 w-11 items-center justify-center text-ink lg:hidden"
-      aria-label="Open menu"
-      aria-controls="mobile-menu"
-      aria-expanded="false"
-    >
-      <Icon name="menu" size={26} />
-    </button>
+    <div class="flex items-center gap-1 lg:hidden">
+      <a
+        href={alt.href}
+        hreflang={alt.lang}
+        lang={alt.lang}
+        aria-label={`Switch language to ${languages[alt.lang]}`}
+        class="hidden min-h-[44px] items-center rounded-full border border-maroon/25 px-3 text-[0.8rem] font-semibold text-ink transition-colors hover:border-gold hover:text-maroon min-[360px]:inline-flex"
+      >
+        {languages[alt.lang]}
+      </a>
+      <button
+        id="menu-open"
+        class="-mr-2 inline-flex h-11 w-11 items-center justify-center text-ink"
+        aria-label="Open menu"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+      >
+        <Icon name="menu" size={26} />
+      </button>
+    </div>
   </div>
 
   <div
