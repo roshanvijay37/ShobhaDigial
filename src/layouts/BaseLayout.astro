@@ -109,6 +109,15 @@ if (site.email) jsonLd.email = site.email;
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
 
     <ClientRouter />
+
+    <!-- JS-off safety: reveal-dependent content must never stay hidden. -->
+    <noscript>
+      <style is:inline>
+        .reveal { opacity: 1 !important; transform: none !important; }
+        [data-img-reveal] { transform: none !important; }
+        [data-img-reveal]::after { display: none !important; }
+      </style>
+    </noscript>
   </head>
   <body>
     <div id="scroll-progress" aria-hidden="true"></div>

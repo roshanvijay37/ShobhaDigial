@@ -13,7 +13,7 @@ const prepared = items.map((p) => ({ ...p, meta: getImage(p.file) }));
 ---
 <div class="reel-wrap flex snap-x snap-mandatory gap-4 overflow-x-auto pb-5">
   {prepared.map((p) => (
-    <figure data-webgl data-alt={p.alt} class="reel-item snap-center shrink-0 overflow-hidden rounded-xl">
+    <figure data-webgl data-img-reveal data-alt={p.alt} class="reel-item snap-center shrink-0 overflow-hidden rounded-xl">
       <Image
         src={p.meta}
         widths={[500, 900, 1280]}

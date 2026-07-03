@@ -360,22 +360,80 @@ html.intro-active {
   overscroll-behavior: contain;
 }
 
-/* Mobile (coarse pointer / no hover): a single static hero still — no looping
-   crossfade or Ken-Burns, and the other slides aren't downloaded. */
-@media (hover: none), (pointer: coarse) {
-  .hero-slide {
-    animation: none;
-    opacity: 0;
+/* ── Cinematic image reveals (IO toggles .is-shown via scrollfx.ts) ─────────
+   An ivory curtain wipes upward off each image as it scrolls into view, with a
+   soft rise. Pure CSS transitions on compositor properties — smooth on touch. */
+[data-img-reveal] {
+  position: relative;
+  transform: translateY(14px); /* < the 16px masonry gap, so tiles never overlap pre-reveal */
+  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) var(--rv-delay, 0s);
+}
+[data-img-reveal]::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 3;
+  background: var(--color-cream-2);
+  transform-origin: top;
+  transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1) var(--rv-delay, 0s);
+}
+[data-img-reveal].is-shown {
+  transform: none;
+}
+[data-img-reveal].is-shown::after {
+  transform: scaleY(0);
+}
+
+/* ── Scroll-driven cinematics (compositor-threaded; mobile-safe) ────────────
+   Progressive enhancement: browsers without scroll-driven animations simply
+   keep the static layout (and desktop keeps its JS parallax/pin scrub). */
+@supports (animation-timeline: view()) {
+  /* Hero content drifts up and fades as the hero exits the viewport. */
+  .hero-exit {
+    animation: heroExit linear both;
+    animation-timeline: view();
+    animation-range: exit 0% exit 100%;
   }
-  .hero-slide:first-child {
-    opacity: 1;
+
+  @media (hover: none), (pointer: coarse) {
+    /* Touch parallax: the hero background pans slower than the page. The
+       wrapper has 15% headroom (-top/height), so the pan never shows edges. */
+    .hero-bg-pan {
+      animation: heroBgPan linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+    /* Pinned cinematic beat, scrubbed by the section's own progress —
+       replaces the desktop JS version on touch devices. */
+    [data-pinned] {
+      view-timeline: --pin block;
+    }
+    [data-pinned-bg] {
+      animation: pinBg linear both;
+      animation-timeline: --pin;
+      animation-range: cover 0% cover 100%;
+    }
+    [data-pinned-content] {
+      animation: pinContent linear both;
+      animation-timeline: --pin;
+      animation-range: cover 5% cover 85%;
+    }
   }
-  .hero-slide:not(:first-child) {
-    display: none;
-  }
-  .hero-kenburns {
-    animation: none;
-  }
+}
+@keyframes heroExit {
+  to { opacity: 0.1; transform: translateY(-44px) scale(0.975); }
+}
+@keyframes heroBgPan {
+  to { transform: translateY(11%); }
+}
+@keyframes pinBg {
+  from { scale: 1.02; }
+  to { scale: 1.22; }
+}
+@keyframes pinContent {
+  0% { opacity: 0; transform: translateY(30px); }
+  35% { opacity: 1; transform: none; }
+  100% { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -418,6 +476,19 @@ html.intro-active {
   }
   .grain-overlay {
     display: none;
+  }
+  [data-img-reveal] {
+    transform: none !important;
+    transition: none !important;
+  }
+  [data-img-reveal]::after {
+    display: none !important;
+  }
+  .hero-exit,
+  .hero-bg-pan,
+  [data-pinned-bg],
+  [data-pinned-content] {
+    animation: none !important;
   }
   /* Collapse the pinned section to a normal block (no long empty scroll). */
   [data-pinned] {

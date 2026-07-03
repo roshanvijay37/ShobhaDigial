@@ -50,13 +50,15 @@ const stats = [
       <Reveal class="order-1 lg:order-2" delay={120}>
         <div class="relative">
           <div data-tilt="6" class="overflow-hidden rounded-2xl">
-            <Image
-              src={aboutImg}
-              widths={[480, 800, 1100]}
-              sizes="(min-width:1024px) 45vw, 100vw"
-              alt="A devotee carrying an ornate deity crown at a temple festival, photographed by Shobha Digital Studio"
-              class="h-full w-full object-cover"
-            />
+            <div data-img-reveal class="overflow-hidden rounded-2xl">
+              <Image
+                src={aboutImg}
+                widths={[480, 800, 1100]}
+                sizes="(min-width:1024px) 45vw, 100vw"
+                alt="A devotee carrying an ornate deity crown at a temple festival, photographed by Shobha Digital Studio"
+                class="h-full w-full object-cover"
+              />
+            </div>
           </div>
           <div class="pointer-events-none absolute -bottom-4 -left-4 -z-0 hidden h-24 w-24 rounded-2xl border-2 border-gold/60 sm:block"></div>
         </div>

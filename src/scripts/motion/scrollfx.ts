@@ -49,6 +49,33 @@ export function initTextReveal(signal: AbortSignal) {
   signal.addEventListener('abort', () => io.disconnect());
 }
 
+// ── 1b. Cinematic image curtain reveals ─────────────────────────────────────
+// Adds .is-shown when a [data-img-reveal] element enters the viewport; CSS
+// wipes an ivory curtain off the image. Siblings revealed in the same pass
+// get a small stagger so grids cascade instead of popping at once.
+export function initImgReveal(signal: AbortSignal) {
+  const els = Array.from(document.querySelectorAll<HTMLElement>('[data-img-reveal]'));
+  if (!els.length) return;
+  if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
+    els.forEach((el) => el.classList.add('is-shown'));
+    return;
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      const entering = entries.filter((e) => e.isIntersecting);
+      entering.forEach((e, i) => {
+        const el = e.target as HTMLElement;
+        el.style.setProperty('--rv-delay', `${(i * 0.09).toFixed(2)}s`);
+        el.classList.add('is-shown');
+        io.unobserve(el);
+      });
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+  );
+  els.forEach((el) => io.observe(el));
+  signal.addEventListener('abort', () => io.disconnect());
+}
+
 // ── 2. Scroll progress bar ─────────────────────────────────────────────────
 export function initProgress(signal: AbortSignal) {
   const bar = document.getElementById('scroll-progress');

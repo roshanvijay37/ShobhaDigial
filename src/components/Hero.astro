@@ -17,9 +17,11 @@ const slides = [
   'kids-purple-field.jpeg',
 ].map((f) => getImage(f));
 ---
-<section class="relative isolate flex min-h-[88vh] items-center overflow-hidden">
-  <div class="absolute inset-0 -z-20 overflow-hidden">
-    <div data-parallax="0.15" class="absolute inset-x-0 -top-[15%] h-[130%]">
+<!-- overflow-clip (not hidden): clip without creating a scroll container, so
+     the scroll-driven view() timelines resolve to the root scrollport. -->
+<section class="relative isolate flex min-h-[88vh] items-center overflow-clip">
+  <div class="absolute inset-0 -z-20 overflow-clip">
+    <div data-parallax="0.15" class="hero-bg-pan absolute inset-x-0 -top-[15%] h-[130%]">
       {slides.map((img, i) => (
         <div class="hero-slide">
           <Image
@@ -37,7 +39,7 @@ const slides = [
   </div>
   <div class="absolute inset-0 -z-10 bg-gradient-to-b from-maroon-dark/75 via-maroon-dark/55 to-maroon-dark/85"></div>
 
-  <div class="shell py-24 text-center">
+  <div class="hero-exit shell py-24 text-center">
     <p class="font-kannada text-lg text-gold-light sm:text-xl">{site.taglineKannada}</p>
     <h1 class="sheen mx-auto mt-5 max-w-4xl font-serif text-[clamp(2.25rem,8vw,3rem)] font-semibold text-cream sm:text-7xl">
       Shobha Digital Studio

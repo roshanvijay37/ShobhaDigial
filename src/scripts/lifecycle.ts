@@ -12,7 +12,7 @@ import { getLenis } from './motion/lenis';
 import { initTilt } from './motion/tilt';
 import { initParallax } from './motion/parallax';
 import { initMagnetic } from './motion/magnetic';
-import { initTextReveal, initProgress, initSkew, initPinned, initReel } from './motion/scrollfx';
+import { initTextReveal, initImgReveal, initProgress, initSkew, initPinned, initReel } from './motion/scrollfx';
 import { initCursor } from './motion/cursor';
 import { initIntro } from './motion/intro';
 
@@ -51,6 +51,7 @@ function initPage() {
   initParallax(signal);
   initMagnetic(signal);
   initTextReveal(signal);
+  initImgReveal(signal);
   initProgress(signal);
   initSkew(signal);
   initPinned(signal);
