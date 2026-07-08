@@ -12,11 +12,11 @@ const lang = asLang(Astro.currentLocale);
 const t = useTranslations(lang);
 const founder = getImage('devanand-bhat.jpeg');
 
-// The family behind the studio — three portraits, no names (client's choice).
-// The two studio headshots are exactly 3:4; the son's environmental frame is
-// biased low-left so he stays in the crop.
+// The family behind the studio — no names (client's choice). Devanand is
+// featured in the story section above, so the band shows the rest of the
+// family (wife, son) to avoid repeating his portrait. Headshot is 3:4; the
+// son's environmental frame is biased low so he stays in the crop.
 const family = [
-  { meta: getImage('devanand-bhat.jpeg'), alt: 'Devanand Bhat, founder of Shobha Digital Studio', pos: 'object-center' },
   { meta: getImage('devanand-wife.jpeg'), alt: 'A member of the family behind Shobha Digital Studio', pos: 'object-center' },
   { meta: getImage('devanand-son.jpeg'), alt: 'A photographer of the team at Shobha Digital Studio, holding a camera', pos: 'object-[32%_78%]' },
 ];
@@ -72,9 +72,9 @@ const values = [
   <section class="bg-cream-2 py-16 sm:py-24">
     <div class="shell">
       <Reveal><SectionHeading eyebrow={t('about.familyEyebrow')} title={t('about.familyTitle')} /></Reveal>
-      <div class="mx-auto mt-14 grid max-w-3xl gap-6 sm:grid-cols-3">
+      <div class="mx-auto mt-14 grid max-w-xl gap-6 sm:grid-cols-2">
         {family.map((member, i) => (
-          <Reveal delay={(i % 3) * 90}>
+          <Reveal delay={(i % 2) * 90}>
             <div data-tilt="5" class="mx-auto w-full max-w-[260px]">
               <div data-img-reveal class="overflow-hidden rounded-2xl border border-gold/30 shadow-sm shadow-black/5">
                 <Image
