@@ -77,6 +77,8 @@ export const ui = {
     'about.story2':
       "From the temple festivals and Nagamandalas of our coast to weddings, naming ceremonies and a child's very first portrait, we have spent years learning when to step forward and when to simply let a moment be. Every frame we make is meant to be looked at again, decades from now, and still feel alive.",
     'about.seeWork': 'See our work',
+    'about.familyEyebrow': 'Behind the lens',
+    'about.familyTitle': 'The family behind the studio',
     'about.valuesEyebrow': 'Why families choose us',
     'about.valuesTitle': 'What we believe in',
     'about.v1.title': 'Respect for tradition',
@@ -183,6 +185,8 @@ export const ui = {
     'about.story2':
       'ನಮ್ಮ ಕರಾವಳಿಯ ದೇವಸ್ಥಾನದ ಉತ್ಸವಗಳು ಮತ್ತು ನಾಗಮಂಡಲಗಳಿಂದ ಹಿಡಿದು ಮದುವೆಗಳು, ನಾಮಕರಣ ಸಮಾರಂಭಗಳು ಮತ್ತು ಮಗುವಿನ ಮೊಟ್ಟಮೊದಲ ಭಾವಚಿತ್ರದವರೆಗೆ, ಯಾವಾಗ ಮುಂದೆ ಬರಬೇಕು ಮತ್ತು ಯಾವಾಗ ಕ್ಷಣವನ್ನು ಹಾಗೆಯೇ ಬಿಡಬೇಕು ಎಂಬುದನ್ನು ವರ್ಷಗಳ ಅನುಭವದಿಂದ ಕಲಿತಿದ್ದೇವೆ. ನಾವು ಸೃಷ್ಟಿಸುವ ಪ್ರತಿ ಚಿತ್ರವೂ ಇಂದಿನಿಂದ ದಶಕಗಳ ನಂತರವೂ ಮತ್ತೆ ನೋಡಿದಾಗ ಜೀವಂತವೆನಿಸಬೇಕು ಎಂಬುದೇ ನಮ್ಮ ಉದ್ದೇಶ.',
     'about.seeWork': 'ನಮ್ಮ ಕೆಲಸ ನೋಡಿ',
+    'about.familyEyebrow': 'ಕ್ಯಾಮೆರಾದ ಹಿಂದೆ',
+    'about.familyTitle': 'ಸ್ಟುಡಿಯೋದ ಹಿಂದಿರುವ ಕುಟುಂಬ',
     'about.valuesEyebrow': 'ಕುಟುಂಬಗಳು ನಮ್ಮನ್ನು ಏಕೆ ಆಯ್ಕೆಮಾಡುತ್ತವೆ',
     'about.valuesTitle': 'ನಾವು ನಂಬುವುದು',
     'about.v1.title': 'ಸಂಪ್ರದಾಯಕ್ಕೆ ಗೌರವ',

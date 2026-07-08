@@ -10,8 +10,16 @@ import { useTranslations, asLang, navHref } from '../../i18n/utils';
 
 const lang = asLang(Astro.currentLocale);
 const t = useTranslations(lang);
-const portrait = getImage('temple-festival-silver-deity.jpeg');
-const second = getImage('kids-traditional-2.jpeg');
+const founder = getImage('devanand-bhat.jpeg');
+
+// The family behind the studio — three portraits, no names (client's choice).
+// The two studio headshots are exactly 3:4; the son's environmental frame is
+// biased low-left so he stays in the crop.
+const family = [
+  { meta: getImage('devanand-bhat.jpeg'), alt: 'Devanand Bhat, founder of Shobha Digital Studio', pos: 'object-center' },
+  { meta: getImage('devanand-wife.jpeg'), alt: 'A member of the family behind Shobha Digital Studio', pos: 'object-center' },
+  { meta: getImage('devanand-son.jpeg'), alt: 'A photographer of the team at Shobha Digital Studio, holding a camera', pos: 'object-[32%_78%]' },
+];
 
 const values = [
   { icon: 'heart', title: t('about.v1.title'), text: t('about.v1.text') },
@@ -48,19 +56,43 @@ const values = [
         </div>
       </Reveal>
       <Reveal delay={120}>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="relative isolate mx-auto w-full max-w-[300px]">
           <div data-tilt="6" class="overflow-hidden rounded-2xl">
-            <Image src={portrait} widths={[300, 600]} sizes="40vw" alt="A deity-bearer at a night temple festival, photographed by Shobha Digital Studio" class="h-full w-full object-cover" />
+            <div data-img-reveal class="overflow-hidden rounded-2xl">
+              <Image src={founder} widths={[300, 360]} sizes="300px" alt="Devanand Bhat, founder of Shobha Digital Studio" class="aspect-[3/4] h-full w-full object-cover" />
+            </div>
           </div>
-          <div data-tilt="6" class="mt-8 overflow-hidden rounded-2xl">
-            <Image src={second} widths={[300, 600]} sizes="40vw" alt="A child in traditional dress on a village path" class="h-full w-full object-cover" />
-          </div>
+          <div class="pointer-events-none absolute -bottom-4 -right-4 -z-10 hidden h-24 w-24 rounded-2xl border-2 border-gold/60 sm:block"></div>
         </div>
       </Reveal>
     </div>
   </section>
 
+  <!-- The family behind the studio (photos only, no names — client's choice) -->
   <section class="bg-cream-2 py-16 sm:py-24">
+    <div class="shell">
+      <Reveal><SectionHeading eyebrow={t('about.familyEyebrow')} title={t('about.familyTitle')} /></Reveal>
+      <div class="mx-auto mt-14 grid max-w-3xl gap-6 sm:grid-cols-3">
+        {family.map((member, i) => (
+          <Reveal delay={(i % 3) * 90}>
+            <div data-tilt="5" class="mx-auto w-full max-w-[260px]">
+              <div data-img-reveal class="overflow-hidden rounded-2xl border border-gold/30 shadow-sm shadow-black/5">
+                <Image
+                  src={member.meta}
+                  widths={[260, 360]}
+                  sizes="260px"
+                  alt={member.alt}
+                  class:list={['aspect-[3/4] h-full w-full object-cover', member.pos]}
+                />
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-cream py-16 sm:py-24">
     <div class="shell">
       <Reveal><SectionHeading eyebrow={t('about.valuesEyebrow')} title={t('about.valuesTitle')} /></Reveal>
       <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
