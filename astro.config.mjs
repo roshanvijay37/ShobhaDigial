@@ -38,7 +38,12 @@ export default defineConfig({
     locales: ['en', 'kn'],
     routing: { prefixDefaultLocale: false }, // English at /, Kannada at /kn/
   },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      i18n: { defaultLocale: 'en', locales: { en: 'en', kn: 'kn' } },
+      filter: (page) => !page.includes('/404'),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

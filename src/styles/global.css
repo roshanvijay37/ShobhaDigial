@@ -12,6 +12,7 @@
   --color-maroon-dark: #100f0e; /* darkest — lightbox backdrops */
   --color-gold: #c49a2e;        /* richer gold accent */
   --color-gold-light: #ddc174;  /* lighter gold for use on dark (hero/lightbox) */
+  --color-gold-deep: #8a6a12;   /* darker gold — accessible text/focus on light (WCAG AA) */
   --color-ink: #1a1916;
   --color-muted: #6b6258;
 
@@ -45,6 +46,16 @@
     letter-spacing: -0.005em;
     text-wrap: balance;
   }
+  /* Kannada pages: apply the loaded Noto Sans Kannada to real content — not just
+     the decorative eyebrows. Cormorant (serif) and Mukta (sans) carry no Kannada
+     glyphs, so without this the whole /kn/ site falls back to an OS default. */
+  html[lang="kn"] body,
+  html[lang="kn"] h1,
+  html[lang="kn"] h2,
+  html[lang="kn"] h3,
+  html[lang="kn"] h4 {
+    font-family: var(--font-kannada);
+  }
   p {
     text-wrap: pretty;
   }
@@ -53,7 +64,7 @@
     color: var(--color-maroon-dark);
   }
   :focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--color-gold-deep);
     outline-offset: 3px;
   }
 }

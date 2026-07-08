@@ -8,7 +8,7 @@ import { useTranslations, asLang, navHref } from '../i18n/utils';
 
 const lang = asLang(Astro.currentLocale);
 const t = useTranslations(lang);
-const year = 2026; // build-time constant (Date.now is unavailable in this env)
+const year = new Date().getFullYear(); // resolved at build time
 const nav = [
   { key: 'nav.home' as const, path: '/' },
   { key: 'nav.portfolio' as const, path: '/portfolio' },
@@ -26,17 +26,22 @@ const nav = [
       </p>
       <div class="mt-6 flex items-center gap-3">
         <a href={site.social.instagram} target="_blank" rel="noopener"
-           class="grid h-10 w-10 place-items-center rounded-full border border-maroon/15 text-ink transition-colors hover:border-gold hover:text-gold"
+           class="grid h-11 w-11 place-items-center rounded-full border border-maroon/15 text-ink transition-colors hover:border-gold hover:text-gold"
            aria-label="Instagram">
           <Icon name="instagram" size={18} />
         </a>
         <a href={site.social.facebook} target="_blank" rel="noopener"
-           class="grid h-10 w-10 place-items-center rounded-full border border-maroon/15 text-ink transition-colors hover:border-gold hover:text-gold"
+           class="grid h-11 w-11 place-items-center rounded-full border border-maroon/15 text-ink transition-colors hover:border-gold hover:text-gold"
            aria-label="Facebook">
           <Icon name="facebook" size={18} />
         </a>
+        <a href={site.social.youtube} target="_blank" rel="noopener"
+           class="grid h-11 w-11 place-items-center rounded-full border border-maroon/15 text-ink transition-colors hover:border-gold hover:text-gold"
+           aria-label="YouTube">
+          <Icon name="youtube" size={18} />
+        </a>
         <a href={whatsappUrl()} target="_blank" rel="noopener"
-           class="grid h-10 w-10 place-items-center rounded-full border border-maroon/15 text-ink transition-colors hover:border-gold hover:text-gold"
+           class="grid h-11 w-11 place-items-center rounded-full border border-maroon/15 text-ink transition-colors hover:border-gold hover:text-gold"
            aria-label="WhatsApp">
           <Icon name="whatsapp" size={18} />
         </a>

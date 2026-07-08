@@ -7,7 +7,7 @@ import GrainOverlay from '../components/GrainOverlay.astro';
 import { ClientRouter } from 'astro:transitions';
 import { site } from '../data/site';
 import { href } from '../lib/url';
-import { asLang, getHreflangs } from '../i18n/utils';
+import { asLang, getHreflangs, useTranslations } from '../i18n/utils';
 
 interface Props {
   title?: string;
@@ -16,16 +16,15 @@ interface Props {
   noindex?: boolean;
 }
 
-const {
-  title,
-  description = 'Shobha Digital Studio, Belvai — wedding, pre-wedding, kids, temple and Yakshagana photography & cinematography across Moodbidri and Dakshina Kannada.',
-  image,
-  noindex = false,
-} = Astro.props;
+const { title, image, noindex = false } = Astro.props;
 
 const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
+// Localized SEO title/description (fall back to the home defaults for pages that
+// pass none). Inner pages pass a localized `title`; brand suffix is appended.
+const description = Astro.props.description ?? t('meta.desc.home');
 const hreflangs = getHreflangs(Astro.url.pathname, Astro.site);
-const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · Photography in Belvai`;
+const pageTitle = title ? `${title} · ${site.name}` : t('meta.title.home');
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image ?? href('/og-image.jpg'), Astro.site).href;
 
@@ -58,7 +57,7 @@ const jsonLd: Record<string, unknown> = {
     opens: '09:00',
     closes: '20:00',
   },
-  sameAs: [site.social.instagram, site.social.facebook],
+  sameAs: [site.social.instagram, site.social.facebook, site.social.youtube],
 };
 // Only publish coordinates once the exact studio location is verified.
 if (site.geoConfirmed) {
@@ -82,6 +81,8 @@ if (site.email) jsonLd.email = site.email;
     <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={lang === 'kn' ? 'kn_IN' : 'en_IN'} />
+    <meta property="og:locale:alternate" content={lang === 'kn' ? 'en_IN' : 'kn_IN'} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />

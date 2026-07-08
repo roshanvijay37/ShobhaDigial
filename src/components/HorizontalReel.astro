@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { getImage } from '../lib/images';
 import type { PortfolioItem } from '../data/portfolio';
+import { asLang } from '../i18n/utils';
 
 // Horizontal scroll-snap photo reel — swipe on touch, drag on desktop
 // (scrollfx initReel). Each figure gets the WebGL hover effect on capable devices.
@@ -9,7 +10,8 @@ interface Props {
   items: PortfolioItem[];
 }
 const { items } = Astro.props;
-const prepared = items.map((p) => ({ ...p, meta: getImage(p.file) }));
+const kn = asLang(Astro.currentLocale) === 'kn';
+const prepared = items.map((p) => ({ ...p, meta: getImage(p.file), titleLoc: kn ? p.titleKn : p.title }));
 ---
 <div class="reel-wrap flex snap-x snap-mandatory gap-4 overflow-x-auto pb-5">
   {prepared.map((p) => (
@@ -22,7 +24,7 @@ const prepared = items.map((p) => ({ ...p, meta: getImage(p.file) }));
         loading="lazy"
         class="h-[42vh] w-auto max-w-[82vw] object-cover sm:h-[56vh]"
       />
-      <figcaption class="sr-only">{p.title}</figcaption>
+      <figcaption class="sr-only">{p.titleLoc}</figcaption>
     </figure>
   ))}
 </div>

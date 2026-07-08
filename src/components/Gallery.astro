@@ -2,13 +2,19 @@
 import { Image, getImage as optimize } from 'astro:assets';
 import Icon from './Icon.astro';
 import { getImage } from '../lib/images';
-import type { PortfolioItem } from '../data/portfolio';
+import { categoryKn, type PortfolioItem } from '../data/portfolio';
+import { asLang } from '../i18n/utils';
 
 interface Props {
   items: PortfolioItem[];
   filters?: string[];
 }
 const { items, filters } = Astro.props;
+
+// Localize the visible labels; the English category stays the filter key
+// (data-filter / data-category) so filtering works identically in both languages.
+const kn = asLang(Astro.currentLocale) === 'kn';
+const catLabel = (c: string) => (kn ? categoryKn[c] ?? c : c);
 
 // Resolve each photo + a high-res variant for the lightbox (so the fullscreen
 // view is crisp instead of a blown-up thumbnail).
@@ -21,7 +27,13 @@ const prepared = await Promise.all(
       format: 'webp',
       quality: 82,
     });
-    return { ...item, meta, full: full.src };
+    return {
+      ...item,
+      meta,
+      full: full.src,
+      titleLoc: kn ? item.titleKn : item.title,
+      catLoc: catLabel(item.category),
+    };
   }),
 );
 ---
@@ -39,7 +51,7 @@ const prepared = await Promise.all(
         ]}
         aria-pressed={i === 0 ? 'true' : 'false'}
       >
-        {cat}
+        {catLabel(cat)}
       </button>
     ))}
   </div>
@@ -55,8 +67,8 @@ const prepared = await Promise.all(
         data-webgl
         data-full={p.full}
         data-alt={p.alt}
-        data-title={p.title}
-        data-cat={p.category}
+        data-title={p.titleLoc}
+        data-cat={p.catLoc}
         aria-label={p.alt}
       >
         <Image
@@ -69,8 +81,8 @@ const prepared = await Promise.all(
         />
         <span class="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-maroon-dark/70 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100">
           <span class="p-5">
-            <span class="block text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-gold-light">{p.category}</span>
-            <span class="mt-1 block font-serif text-xl text-cream">{p.title}</span>
+            <span class="block text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-gold-light">{p.catLoc}</span>
+            <span class="mt-1 block font-serif text-xl text-cream">{p.titleLoc}</span>
           </span>
         </span>
       </button>

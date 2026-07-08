@@ -40,6 +40,7 @@ export const site = {
   social: {
     instagram: 'https://www.instagram.com/shobha__digital__studio/',
     facebook: 'https://www.facebook.com/p/Shobha-Digital-Studio-100053529836130/',
+    youtube: 'https://www.youtube.com/@shobhadigitalstudio3347',
   },
 
   // Free contact-form backend. Create a key (uses your email) at https://web3forms.com

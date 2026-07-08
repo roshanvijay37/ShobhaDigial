@@ -112,6 +112,30 @@ export const ui = {
     'form.note':
       'The online enquiry form will be enabled soon — meanwhile, please reach us on WhatsApp.',
     'pin.statement': 'Every ritual, every glance, every joy — kept for the generations to come.',
+    'films.comingSoon': 'Coming soon',
+    'meta.title.home': 'Shobha Digital Studio · Photography in Belvai',
+    'meta.title.portfolio': 'Portfolio',
+    'meta.title.services': 'Services',
+    'meta.title.about': 'About',
+    'meta.title.contact': 'Contact',
+    'meta.desc.home':
+      'Shobha Digital Studio, Belvai — wedding, pre-wedding, kids, temple and Yakshagana photography & cinematography across Moodbidri and Dakshina Kannada.',
+    'meta.desc.portfolio':
+      'A gallery of weddings, temple festivals, Yakshagana, aerial drone coverage, kids and portrait photography by Shobha Digital Studio, Belvai.',
+    'meta.desc.services':
+      'Wedding & pre-wedding photography and films, kids & newborn, temple and Yakshagana coverage, portraits, events, album design and printing — Shobha Digital Studio, Belvai.',
+    'meta.desc.about':
+      'Shobha Digital Studio is a photography and cinematography studio in Belvai, led by Devanand Bhat — rooted in the culture and traditions of coastal Karnataka.',
+    'meta.desc.contact':
+      'Get in touch with Shobha Digital Studio, Belvai — WhatsApp, call or send an enquiry for weddings, events, kids and temple photography.',
+    'form.occ.wedding': 'Wedding',
+    'form.occ.prewedding': 'Pre-Wedding',
+    'form.occ.kids': 'Kids / Newborn',
+    'form.occ.temple': 'Temple / Ritual',
+    'form.occ.yakshagana': 'Yakshagana / Stage',
+    'form.occ.portrait': 'Portrait / Family',
+    'form.occ.event': 'Event / Function',
+    'form.occ.other': 'Other',
   },
   kn: {
     'nav.home': 'ಮುಖಪುಟ',
@@ -220,5 +244,29 @@ export const ui = {
     'form.note':
       'ಆನ್‌ಲೈನ್ ವಿಚಾರಣೆ ಫಾರ್ಮ್ ಶೀಘ್ರದಲ್ಲೇ ಲಭ್ಯವಾಗಲಿದೆ — ಅಲ್ಲಿಯವರೆಗೆ, ದಯವಿಟ್ಟು ವಾಟ್ಸ್‌ಆ್ಯಪ್‌ನಲ್ಲಿ ಸಂಪರ್ಕಿಸಿ.',
     'pin.statement': 'ಪ್ರತಿ ಆಚರಣೆ, ಪ್ರತಿ ನೋಟ, ಪ್ರತಿ ಸಂತೋಷ — ಮುಂದಿನ ಪೀಳಿಗೆಗಳಿಗಾಗಿ ಜೋಪಾನ.',
+    'films.comingSoon': 'ಶೀಘ್ರದಲ್ಲೇ',
+    'meta.title.home': 'ಶೋಭಾ ಡಿಜಿಟಲ್ ಸ್ಟುಡಿಯೋ · ಬೆಳುವಾಯಿಯ ಛಾಯಾಗ್ರಹಣ',
+    'meta.title.portfolio': 'ಚಿತ್ರಸಂಗ್ರಹ',
+    'meta.title.services': 'ಸೇವೆಗಳು',
+    'meta.title.about': 'ನಮ್ಮ ಕಥೆ',
+    'meta.title.contact': 'ಸಂಪರ್ಕ',
+    'meta.desc.home':
+      'ಶೋಭಾ ಡಿಜಿಟಲ್ ಸ್ಟುಡಿಯೋ, ಬೆಳುವಾಯಿ — ಮೂಡುಬಿದಿರೆ ಮತ್ತು ದಕ್ಷಿಣ ಕನ್ನಡದಾದ್ಯಂತ ಮದುವೆ, ಪ್ರೀ-ವೆಡ್ಡಿಂಗ್, ಮಕ್ಕಳು, ದೇವಸ್ಥಾನ ಮತ್ತು ಯಕ್ಷಗಾನ ಛಾಯಾಗ್ರಹಣ ಮತ್ತು ಚಿತ್ರೀಕರಣ.',
+    'meta.desc.portfolio':
+      'ಶೋಭಾ ಡಿಜಿಟಲ್ ಸ್ಟುಡಿಯೋ, ಬೆಳುವಾಯಿ ಇವರ ಮದುವೆ, ದೇವಸ್ಥಾನದ ಉತ್ಸವಗಳು, ಯಕ್ಷಗಾನ, ಡ್ರೋನ್ ನೋಟ, ಮಕ್ಕಳು ಮತ್ತು ಭಾವಚಿತ್ರ ಛಾಯಾಗ್ರಹಣದ ಸಂಗ್ರಹ.',
+    'meta.desc.services':
+      'ಮದುವೆ & ಪ್ರೀ-ವೆಡ್ಡಿಂಗ್ ಛಾಯಾಗ್ರಹಣ ಮತ್ತು ಫಿಲ್ಮ್, ಮಕ್ಕಳು & ನವಜಾತ, ದೇವಸ್ಥಾನ ಮತ್ತು ಯಕ್ಷಗಾನ, ಭಾವಚಿತ್ರ, ಕಾರ್ಯಕ್ರಮ, ಆಲ್ಬಮ್ ವಿನ್ಯಾಸ ಮತ್ತು ಮುದ್ರಣ — ಶೋಭಾ ಡಿಜಿಟಲ್ ಸ್ಟುಡಿಯೋ, ಬೆಳುವಾಯಿ.',
+    'meta.desc.about':
+      'ಶೋಭಾ ಡಿಜಿಟಲ್ ಸ್ಟುಡಿಯೋ ಬೆಳುವಾಯಿಯ ಛಾಯಾಗ್ರಹಣ ಮತ್ತು ಚಿತ್ರೀಕರಣ ಸ್ಟುಡಿಯೋ, ದೇವಾನಂದ ಭಟ್ ಅವರ ನೇತೃತ್ವದಲ್ಲಿ — ಕರಾವಳಿ ಕರ್ನಾಟಕದ ಸಂಸ್ಕೃತಿ ಮತ್ತು ಸಂಪ್ರದಾಯಗಳಲ್ಲಿ ಬೇರೂರಿದೆ.',
+    'meta.desc.contact':
+      'ಶೋಭಾ ಡಿಜಿಟಲ್ ಸ್ಟುಡಿಯೋ, ಬೆಳುವಾಯಿ ಅವರನ್ನು ಸಂಪರ್ಕಿಸಿ — ಮದುವೆ, ಕಾರ್ಯಕ್ರಮ, ಮಕ್ಕಳು ಮತ್ತು ದೇವಸ್ಥಾನ ಛಾಯಾಗ್ರಹಣಕ್ಕಾಗಿ ವಾಟ್ಸ್‌ಆ್ಯಪ್, ಕರೆ ಅಥವಾ ವಿಚಾರಣೆ.',
+    'form.occ.wedding': 'ಮದುವೆ',
+    'form.occ.prewedding': 'ಪ್ರೀ-ವೆಡ್ಡಿಂಗ್',
+    'form.occ.kids': 'ಮಕ್ಕಳು / ನವಜಾತ',
+    'form.occ.temple': 'ದೇವಸ್ಥಾನ / ವಿಧಿ',
+    'form.occ.yakshagana': 'ಯಕ್ಷಗಾನ / ವೇದಿಕೆ',
+    'form.occ.portrait': 'ಭಾವಚಿತ್ರ / ಕುಟುಂಬ',
+    'form.occ.event': 'ಕಾರ್ಯಕ್ರಮ / ಸಮಾರಂಭ',
+    'form.occ.other': 'ಇತರೆ',
   },
 } as const;

@@ -18,12 +18,12 @@ const process = [
 ];
 ---
 <BaseLayout
-  title="Services"
-  description="Wedding & pre-wedding photography and films, kids & newborn, temple and Yakshagana coverage, portraits, events, album design and printing — Shobha Digital Studio, Belvai."
+  title={t('meta.title.services')}
+  description={t('meta.desc.services')}
 >
   <section class="bg-cream-2 py-16 text-center sm:py-20">
     <div class="shell">
-      <p class="font-kannada text-base text-gold">ನಮ್ಮ ಸೇವೆಗಳು</p>
+      <p lang="kn" class="font-kannada text-base text-gold-deep">ನಮ್ಮ ಸೇವೆಗಳು</p>
       <h1 class="mt-3 font-serif text-5xl font-semibold text-ink sm:text-6xl">{t('svc.title')}</h1>
       <div class="divider mx-auto mt-5 max-w-xs text-gold" aria-hidden="true">◆</div>
       <p class="mx-auto mt-5 max-w-2xl text-ink/70">{t('svc.sub')}</p>
@@ -32,6 +32,7 @@ const process = [
 
   <section class="bg-cream py-16 sm:py-24">
     <div class="shell">
+      <h2 class="sr-only">{t('services.title')}</h2>
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {services.map((service, i) => (
           <Reveal delay={(i % 4) * 80}><ServiceCard service={service} /></Reveal>

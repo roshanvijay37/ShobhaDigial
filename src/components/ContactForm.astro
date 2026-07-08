@@ -30,14 +30,14 @@ const fieldClass =
     <div>
       <label class="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-maroon" for="event">{t('form.occasion')}</label>
       <select id="event" name="occasion" class={fieldClass}>
-        <option>Wedding</option>
-        <option>Pre-Wedding</option>
-        <option>Kids / Newborn</option>
-        <option>Temple / Ritual</option>
-        <option>Yakshagana / Stage</option>
-        <option>Portrait / Family</option>
-        <option>Event / Function</option>
-        <option>Other</option>
+        <option value="Wedding">{t('form.occ.wedding')}</option>
+        <option value="Pre-Wedding">{t('form.occ.prewedding')}</option>
+        <option value="Kids / Newborn">{t('form.occ.kids')}</option>
+        <option value="Temple / Ritual">{t('form.occ.temple')}</option>
+        <option value="Yakshagana / Stage">{t('form.occ.yakshagana')}</option>
+        <option value="Portrait / Family">{t('form.occ.portrait')}</option>
+        <option value="Event / Function">{t('form.occ.event')}</option>
+        <option value="Other">{t('form.occ.other')}</option>
       </select>
     </div>
     <div>
